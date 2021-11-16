@@ -12,10 +12,10 @@ namespace GalerieViewer.Services
         public string ImagePath { get; private set; }
         public IFormFile Image { get; private set; }
         public string UniqueFileName { get; private set; }
-        public string SetFileName(IFormFile ImageFile, string name)
+        public string SetFileName(IFormFile ImageFile, string nameOfFile)
         {
             string extension = Path.GetExtension(ImageFile.FileName);
-            UniqueFileName = Guid.NewGuid().ToString() + "_" + name + extension;
+            UniqueFileName = Guid.NewGuid().ToString() + "_" + nameOfFile + extension;
             Image = ImageFile;
             return UniqueFileName;
         }
