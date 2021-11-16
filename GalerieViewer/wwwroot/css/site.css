@@ -1,0 +1,194 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-size: 1rem;
+}
+
+.navbar {
+    font-size: 0.9rem;
+}
+
+/* Provide sufficient contrast against white background */
+
+
+.btn-sm, .btn-group-sm > .btn {
+    padding: 0.15rem 0.3rem;
+    font-size: 0.6rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+
+
+.container-imageCard .card:hover .card-img {
+    opacity: 1;
+}
+
+.container-imageCard .card {
+    transition: transform .1s; /* Animation */
+    cursor: pointer;
+}
+
+    .container-imageCard .card:hover {
+        transform: scale(1.05);
+    }
+
+.container-imageCard .card-img {
+    object-fit: cover;
+    opacity: 0.8;
+}
+
+.container-imageCard .card-img-overlay {
+    background-color: rgb(0, 0, 0,.8);
+    position: absolute;
+    height: 45%;
+    top: 55%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.container-imageCard p {
+    line-height: 120%;
+}
+
+.detail-galerie{
+
+    border-left: solid;
+    border-left-width: medium;
+    border-left-color: #cf2e1f;
+}
+
+.detail-galerie * {
+        font-size: 0.8rem;
+    }
+
+    .detail-galerie a {
+        color: #cf2e1f;
+        font-weight: 400;
+    }
+
+        .detail-galerie a:hover {
+            color: #cf2e1f;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+.monImage:hover {
+    opacity: 0.2;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.btn-link {
+    font-weight: 200;
+    color: #5a6470;
+    text-decoration: none;
+    border-radius: 0px;
+    transition: transform .1s;
+}
+
+    .btn-link:hover {
+        font-weight: 400;
+        color: #1b1d1f;
+        text-decoration: none;
+        transform: scale(1.03);
+    }
+
+.formGallery * {
+    font-size: 0.8rem;
+}
+/*    .btn-link:focus, .btn-link.focus {
+        text-decoration: none;
+        font-weight: 400;
+        box-shadow: none;
+    }*/
+
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+h1, .h1 {
+    font-size: 2rem;
+}
+
+h2, .h2 {
+    font-size: 1.8rem;
+}
+
+h3, .h3 {
+    font-size: 1.6rem;
+}
+
+h4, .h4 {
+    font-size: 1.4rem;
+}
+
+h5, .h5 {
+    font-size: 1.2rem;
+}
+
+h6, .h6 {
+    font-size: 1rem;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
