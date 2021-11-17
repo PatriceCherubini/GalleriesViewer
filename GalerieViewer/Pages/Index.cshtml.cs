@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -24,7 +25,7 @@ namespace GalerieViewer.Pages
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly ILogger<IndexModel> _logger;
         private IGalerieService _galerieService;
-        private readonly IPictureUploader _pictureUploader;
+        
         public int? Show { get; private set; }
         public string ErrorMessage { get; set; }
         public GalerieFullViewModel Galerie { get; set; }
@@ -33,20 +34,40 @@ namespace GalerieViewer.Pages
         [BindProperty]
         public GalerieViewModel AddedGallery { get; set; }
 
-        public IndexModel(ILogger<IndexModel> logger, IGalerieService galerieService, IWebHostEnvironment hostEnvironment, IPictureUploader pictureUploader)
+        public IndexModel(ILogger<IndexModel> logger, IGalerieService galerieService, IWebHostEnvironment hostEnvironment)
         {
             _logger = logger;
             _galerieService = galerieService;
             _hostEnvironment = hostEnvironment;
-            _pictureUploader = pictureUploader;
         }
 
-        public IActionResult OnGet(int id, int? show)
+        public IActionResult OnGet(int id)
         {
            
             Galerie = _galerieService.GenerateGalerie(id);
             Show = Galerie == null ? 0 : Galerie.Id;
             return Page();
+        }
+
+        public PartialViewResult OnGetGalleryModalPartial(int openedGallery)
+        {
+            var _part = new PartialViewResult
+            {
+                ViewName = "_GalleryModalPartial",
+                ViewData = new ViewDataDictionary<GalerieViewModel>(ViewData, new GalerieViewModel { })
+
+            };
+            _part.TempData["showGallery"] = openedGallery;
+            return _part;
+        }
+        public PartialViewResult OnGetGalleryModalPartialEdit(int idGallery)
+        {
+            var galleryEdit = _galerieService.GenerateGalerie(idGallery);
+            return new PartialViewResult
+            {
+                ViewName = "_GalleryModalPartial",
+                ViewData = new ViewDataDictionary<GalerieViewModel>(ViewData, galleryEdit),
+            };
         }
 
         public IActionResult OnPostEditImg(int idImage, int openedGallery)
@@ -66,12 +87,12 @@ namespace GalerieViewer.Pages
         public IActionResult OnPostDeleteImg(int idImage, int idGallery)
         {
             _galerieService.DeleteImage(idImage, idGallery);
-            return RedirectToPage("Index", new { id = idGallery, show = idGallery });
+            return RedirectToPage("Index", new { id = idGallery });
         }
         public IActionResult OnPostDeleteGallery(int idGallery)
         {
             _galerieService.DeleteGallery(idGallery);
-            return RedirectToPage("Index", new { id = 0, show = idGallery });
+            return RedirectToPage("Index", new { id = 0 });
         }
         public IActionResult OnPostAddImage(int openedGallery)
         {
@@ -83,11 +104,7 @@ namespace GalerieViewer.Pages
                 && (ModelState["AddedImage.DateCreation"].ValidationState == ModelValidationState.Valid)
                 && (ModelState["AddedImage.ImageFile"].ValidationState == ModelValidationState.Valid))
             {
-                string rootPath = _hostEnvironment.WebRootPath;
-                string uniqueFileName = _pictureUploader.SetFileName(AddedImage.ImageFile, AddedImage.Nom);
-                _pictureUploader.SetPath(rootPath, "Images");
-                _pictureUploader.Upload();
-                AddedImage.FileName = uniqueFileName;
+                AddedImage.FileName = _galerieService.UploadImage(_hostEnvironment.WebRootPath, "Images", AddedImage);
 
                 if (AddedImage.ImageItemId == 0)
                 {
@@ -97,7 +114,7 @@ namespace GalerieViewer.Pages
                 {
                     _galerieService.UpdateImage(AddedImage);
                 }
-                return RedirectToPage("Index", new { id = openedGallery, show = openedGallery });
+                return RedirectToPage("Index", new { id = openedGallery });
             }
             return Page();
         }
@@ -120,7 +137,7 @@ namespace GalerieViewer.Pages
                     toOpenGallery = AddedGallery.Id;
                 }
 
-                return RedirectToPage("Index", new { id = toOpenGallery, show = toOpenGallery });
+                return RedirectToPage("Index", new { id = toOpenGallery });
             }
             return Page();
         }

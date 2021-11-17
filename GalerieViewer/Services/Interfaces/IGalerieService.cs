@@ -15,5 +15,6 @@ namespace GalerieViewer.Services
         void UpdateGallery(GalerieViewModel gallery);
         void DeleteImage(int idImage, int idGallery);
         void DeleteGallery(int idGallery);
+        string UploadImage(string root, string folder, ImageViewModel image);
     }
 }

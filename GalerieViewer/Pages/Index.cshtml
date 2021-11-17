@@ -1,8 +1,9 @@
-﻿@page "{id=1}/{show?}"
+﻿@page "{id=1}"
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
+<div id="gallery-modal-placeholder"></div>
 <div class="container border border-dark">
     <div class="row">
         <div class="col-sm-3 m-2 p-1 border border-danger">
@@ -10,30 +11,9 @@
                 @await Component.InvokeAsync("ListGaleries", new { show = Model.Show })
             </div>
             <hr />
-            <div>
-                <p class="m-1">Create a new gallery</p>
-                <form method="post" class="formGallery m-2" asp-page-handler="AddGallery" asp-route-openedGallery="@((Model.Galerie!=null)? @Model.Galerie.Id:"0")" enctype="multipart/form-data">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="AddedGallery.Name" class="control-label"></label>
-                        <input asp-for="AddedGallery.Name" class="form-control" />
-                        <span asp-validation-for="AddedGallery.Name" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="AddedGallery.Description" class="control-label"></label>
-                        <input asp-for="AddedGallery.Description" class="form-control" />
-                        <span asp-validation-for="AddedGallery.Description" class="text-danger"></span>
-                    </div>
-                    @if (Model.AddedImage != null)
-                    {
-                        <input type="hidden" asp-for="AddedGallery.Id" value=@Model.AddedGallery.Id>
-                        <input type="hidden" asp-for="AddedGallery.DateCreation" value=@Model.AddedGallery.DateCreation>
-                    }
-                    <div class="form-group">
-                        <input type="submit" class="btn btn-primary" />
-                    </div>
-                </form>
-            </div>
+            <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-url="@Url.Page("Index", "GalleryModalPartial", new { openedGallery = Model.Show })">
+                Add new gallery
+            </button>
         </div>
         <div class="col m-2 p-2 border border-success">
             <div class="p-3">
@@ -116,7 +96,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="AddedImage.Description" class="control-label"></label>
-                                    <input asp-for="AddedImage.Description" class="form-control" />
+                                    <textarea asp-for="AddedImage.Description" class="form-control"></textarea>
                                     <span asp-validation-for="AddedImage.Description" class="text-danger"></span>
                                 </div>
                                 <div class="form-group">
@@ -138,6 +118,6 @@
                     </div>
                 }
             </div>
-                </div>
-            </div>
         </div>
+    </div>
+</div>

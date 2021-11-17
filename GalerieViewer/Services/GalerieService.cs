@@ -12,9 +12,11 @@ namespace GalerieViewer.Services
     public class GalerieService : IGalerieService
     {
         private IDataAccess _dataAccess;
-        public GalerieService(IDataAccess dataAccess)
+        private readonly IPictureUploader _pictureUploader;
+        public GalerieService(IDataAccess dataAccess, IPictureUploader pictureUploader)
         {
             _dataAccess = dataAccess;
+            _pictureUploader = pictureUploader;
         }
         public GalerieFullViewModel GenerateGalerie(int id)
         {
@@ -61,6 +63,15 @@ namespace GalerieViewer.Services
         public void UpdateGallery(GalerieViewModel gallery)
         {
             _dataAccess.UpdateGallery(gallery);
+        }
+
+        public string UploadImage(string root, string folder, ImageViewModel image)
+        {
+            string uniqueFileName = _pictureUploader.SetFileName(image.ImageFile, image.Nom);
+            _pictureUploader.SetPath(root, folder);
+            _pictureUploader.Upload();
+
+            return uniqueFileName;
         }
     }
 }
