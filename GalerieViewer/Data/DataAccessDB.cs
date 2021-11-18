@@ -230,10 +230,9 @@ namespace GalerieViewer.Data
         public void UpdateGallery(GalerieViewModel galerie)
         {
             var updatedGallery = _context.Galeries.Where(i => i.GalerieId == galerie.Id).FirstOrDefault();
-            updatedGallery.DateCreation = galerie.DateCreation;
             updatedGallery.Description = galerie.Description;
-            updatedGallery.DateUpdate = DateTime.Now;
             updatedGallery.Nom = galerie.Name;
+            updatedGallery.DateUpdate = DateTime.Now;
 
             _context.SaveChanges();
         }

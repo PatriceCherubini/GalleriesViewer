@@ -1,0 +1,101 @@
+﻿@model GalerieViewer.ViewModels.ImageViewModel
+
+<div class="modal fade" tabindex="-1" role="dialog" id="newImage">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p class="m-1" id="addNewGallery"> @((Model.ImageItemId == 0)? "Add a new picture" : "Edit picture")</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" data-url="@Url.Page("Index", Model.GalerieId)">
+                <form method="post" class="formGallery m-2" asp-page-handler="AddImage" enctype="multipart/form-data">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <input type="hidden" asp-for="ImageItemId" value="@Model.ImageItemId" />
+                    <input type="hidden" asp-for="GalerieId" value="@Model.GalerieId" />
+                    @*<input type="hidden" asp-for="OpenedGallery" value="@Model.OpenedGallery" />*@
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Nom" class="control-label"></label>
+                        <input asp-for="Nom" class="form-control" />
+                        <span asp-validation-for="Nom" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateCreation" class="control-label"></label>
+                        <input asp-for="DateCreation" class="form-control" />
+                        <span asp-validation-for="DateCreation" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ImageFile" class="control-label"></label>
+                        <input asp-for="ImageFile" class="form-control" accept="image/*" />
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<div class="row">
+        @if (Model.AddedImage == null)
+        {
+            <p class="m-1">Add a new picture</p>
+        }
+        else
+        {
+            if (Model.AddedImage.ImageItemId == 0)
+            {
+                <p class="m-1">Add a new picture</p>
+            }
+            else
+            {
+                <p>Edit picture: @Model.AddedImage.Nom</p>
+            }
+        }
+    </div>*@
+@*<div class="row">
+        <div class="col-md-4">
+            <form method="post" class="formGallery" asp-page-handler="AddImage" asp-route-openedGallery="@Model.Galerie.Id" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="AddedImage.Nom" class="control-label"></label>
+                    <input asp-for="AddedImage.Nom" class="form-control" />
+                    <span asp-validation-for="AddedImage.Nom" class="text-danger"></span>
+                    <input type="hidden" asp-for="AddedImage.GalerieId" value="@Model.Galerie.Id">
+                    @if (Model.AddedImage != null)
+                    {
+                        <input type="hidden" asp-for="AddedImage.ImageItemId" value=@Model.AddedImage.ImageItemId>
+                    }
+                </div>
+                <div class="form-group">
+                    <label asp-for="AddedImage.Description" class="control-label"></label>
+                    <textarea asp-for="AddedImage.Description" class="form-control"></textarea>
+                    <span asp-validation-for="AddedImage.Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AddedImage.DateCreation" class="control-label"></label>
+                    <input asp-for="AddedImage.DateCreation" class="form-control" />
+                    <span asp-validation-for="AddedImage.DateCreation" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AddedImage.ImageFile" class="control-label"></label>
+                    <input asp-for="AddedImage.ImageFile" accept="image/*" />
+                    <span asp-validation-for="AddedImage.ImageFile" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>*@
