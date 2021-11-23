@@ -15,7 +15,6 @@ namespace GalerieViewer.Services
         {
             _dataAccess = dataAccess;
         }
-
         public ICollection<GalerieViewModel> GenerateListGaleries()
         {
             return _dataAccess.GetAllGaleries();

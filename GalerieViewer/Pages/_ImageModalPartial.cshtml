@@ -14,7 +14,6 @@
                     <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
                     <input type="hidden" asp-for="ImageItemId" value="@Model.ImageItemId" />
                     <input type="hidden" asp-for="GalerieId" value="@Model.GalerieId" />
-                    @*<input type="hidden" asp-for="OpenedGallery" value="@Model.OpenedGallery" />*@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label asp-for="Nom" class="control-label"></label>
@@ -45,57 +44,3 @@
         </div>
     </div>
 </div>
-
-@*<div class="row">
-        @if (Model.AddedImage == null)
-        {
-            <p class="m-1">Add a new picture</p>
-        }
-        else
-        {
-            if (Model.AddedImage.ImageItemId == 0)
-            {
-                <p class="m-1">Add a new picture</p>
-            }
-            else
-            {
-                <p>Edit picture: @Model.AddedImage.Nom</p>
-            }
-        }
-    </div>*@
-@*<div class="row">
-        <div class="col-md-4">
-            <form method="post" class="formGallery" asp-page-handler="AddImage" asp-route-openedGallery="@Model.Galerie.Id" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="AddedImage.Nom" class="control-label"></label>
-                    <input asp-for="AddedImage.Nom" class="form-control" />
-                    <span asp-validation-for="AddedImage.Nom" class="text-danger"></span>
-                    <input type="hidden" asp-for="AddedImage.GalerieId" value="@Model.Galerie.Id">
-                    @if (Model.AddedImage != null)
-                    {
-                        <input type="hidden" asp-for="AddedImage.ImageItemId" value=@Model.AddedImage.ImageItemId>
-                    }
-                </div>
-                <div class="form-group">
-                    <label asp-for="AddedImage.Description" class="control-label"></label>
-                    <textarea asp-for="AddedImage.Description" class="form-control"></textarea>
-                    <span asp-validation-for="AddedImage.Description" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AddedImage.DateCreation" class="control-label"></label>
-                    <input asp-for="AddedImage.DateCreation" class="form-control" />
-                    <span asp-validation-for="AddedImage.DateCreation" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="AddedImage.ImageFile" class="control-label"></label>
-                    <input asp-for="AddedImage.ImageFile" accept="image/*" />
-                    <span asp-validation-for="AddedImage.ImageFile" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>*@

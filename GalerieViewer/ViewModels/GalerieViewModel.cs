@@ -19,6 +19,6 @@ namespace GalerieViewer.ViewModels
         [Required(ErrorMessage = "Please, give a small description of your gallery")]
         [MaxLengthAttribute(200, ErrorMessage = "Your description is too long. Maximum 200 caracters")]
         public string Description { get; set; }
-
+        public int TotalPages { get ; set ; }
     }
 }

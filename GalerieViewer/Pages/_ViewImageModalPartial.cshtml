@@ -1,0 +1,39 @@
+﻿@model GalerieViewer.ViewModels.ViewImageViewModel
+
+<div class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document" id="showImage">
+        <div class="modal-content">          
+            <div class="modal-body">
+                <div id="containerHeaderImg">
+                    <div class="row">
+                        <div class="col">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col mb-4" id="nomImage">
+                            @Model.Image.Nom
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <img class="card-img-top w-100" src="~/Images/@Model.Image.FileName" alt="@Model.Image.Description">
+                    <div class="card-body">
+                        <p class="m-1" id="descriptionImage">@Model.Image.Description</p>
+                        <p class="m-1">@Model.Image.DateCreation</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div id="buttonNavigation">
+                            <button type="button" data-toggle="ajax-modal-navigateImage" class="btn btn-secondary mx-1 @((Model.IdPrevious == null)?"invisible":"")" data-url="@Url.Page("Index", "ViewImageModalPartial", new { idImage = Model.IdPrevious})">Previous</button>          
+                            <button type="button" data-toggle="ajax-modal-navigateImage" class="btn btn-secondary mx-1 @((Model.IdNext == null)?"invisible":"")" data-url="@Url.Page("Index", "ViewImageModalPartial", new { idImage = Model.IdNext })">Next</button>
+                    </div>
+                    <div class="row">@Model.Position</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

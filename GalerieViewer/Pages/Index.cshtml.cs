@@ -25,7 +25,9 @@ namespace GalerieViewer.Pages
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly ILogger<IndexModel> _logger;
         private IGalerieService _galerieService;
-        
+        public int PageSize { get; set; } = 4;
+        [BindProperty(SupportsGet = true)]
+        public int PageNB { get; set; } = 1;
         public int? Show { get; private set; }
         public string ErrorMessage { get; set; }
         public GalerieFullViewModel Galerie { get; set; }
@@ -35,15 +37,17 @@ namespace GalerieViewer.Pages
             _galerieService = galerieService;
             _hostEnvironment = hostEnvironment;
         }
-
         public IActionResult OnGet(int id)
-        {
-           
-            Galerie = _galerieService.GenerateGalerie(id);
+        {  
+            Galerie = _galerieService.GetPaginatedGallery(id, PageSize, PageNB);
             Show = Galerie == null ? 0 : Galerie.Id;
             return Page();
         }
 
+        public PartialViewResult OnGetViewImageModalPartial(int idImage, int id)
+        {
+            return Partial("_ViewImageModalPartial", _galerieService.ViewImage(idImage, id));
+        }
         public PartialViewResult OnGetGalleryModalPartial(int openedGallery)
         {
             return Partial("_GalleryModalPartial", new EditGalleryViewModel { Gallery = new GalerieViewModel(), OpenedGallery = openedGallery });
@@ -56,30 +60,14 @@ namespace GalerieViewer.Pages
         {
             return Partial("_ImageModalPartial", new ImageViewModel { GalerieId = idGallery });
         }
-
         public PartialViewResult OnGetImageModalPartialEdit(int idImage)
         {
             return Partial("_ImageModalPartial", _galerieService.GetImage(idImage));
         }
-
-        //public IActionResult OnPostEditImg(int idImage, int openedGallery)
-        //{
-        //    Galerie = _galerieService.GenerateGalerie(openedGallery);
-        //    AddedImage = _galerieService.GetImage(idImage);
-        //    Show = openedGallery;
-        //    return Page();
-        //}
-        //public IActionResult OnPostEditGallery(int IdGallery)
-        //{
-        //    Galerie = _galerieService.GenerateGalerie(IdGallery);
-        //    AddedGallery = _galerieService.GenerateGalerie(IdGallery);
-        //    Show = IdGallery;
-        //    return Page();
-        //}
         public IActionResult OnPostDeleteImg(int idImage, int idGallery)
         {
             _galerieService.DeleteImage(idImage, idGallery);
-            return RedirectToPage("Index", new { id = idGallery });
+            return RedirectToPage("Index", new { id = idGallery, PageNB = PageNB});
         }
         public IActionResult OnPostDeleteGallery(int idGallery)
         {
@@ -88,7 +76,7 @@ namespace GalerieViewer.Pages
         }
         public IActionResult OnPostAddGallery(EditGalleryViewModel model)
         {
-            Galerie = _galerieService.GenerateGalerie(model.OpenedGallery);
+            Galerie = _galerieService.GetPaginatedGallery(model.OpenedGallery, PageSize, PageNB);
             Show = model.OpenedGallery;
             int toOpenGallery = 0;
 
@@ -108,7 +96,7 @@ namespace GalerieViewer.Pages
         }
         public PartialViewResult OnPostAddImage(ImageViewModel model)
         {
-            Galerie = _galerieService.GenerateGalerie(model.GalerieId);
+            Galerie = _galerieService.GetPaginatedGallery(model.GalerieId, PageSize, PageNB);
             Show = model.GalerieId;
 
             if (ModelState.IsValid)
@@ -129,33 +117,6 @@ namespace GalerieViewer.Pages
                 ViewName = "_ImageModalPartial",
                 ViewData = new ViewDataDictionary<ImageViewModel>(ViewData, model)
             };
-
-            //return Partial("_ImageyModalPartial", new ImageViewModel());
         }
-
-        //public IActionResult OnPostAddImage(int openedGallery)
-        //{
-        //    Galerie = _galerieService.GenerateGalerie(openedGallery);
-        //    Show = openedGallery;
-
-        //    if ((ModelState["AddedImage.Nom"].ValidationState == ModelValidationState.Valid)
-        //        && (ModelState["AddedImage.Description"].ValidationState == ModelValidationState.Valid)
-        //        && (ModelState["AddedImage.DateCreation"].ValidationState == ModelValidationState.Valid)
-        //        && (ModelState["AddedImage.ImageFile"].ValidationState == ModelValidationState.Valid))
-        //    {
-        //        AddedImage.FileName = _galerieService.UploadImage(_hostEnvironment.WebRootPath, "Images", AddedImage);
-
-        //        if (AddedImage.ImageItemId == 0)
-        //        {
-        //            _galerieService.AddImageInGalerie(AddedImage);
-        //        }
-        //        else
-        //        {
-        //            _galerieService.UpdateImage(AddedImage);
-        //        }
-        //        return RedirectToPage("Index", new { id = openedGallery });
-        //    }
-        //    return Page();
-        //}
     }
 }

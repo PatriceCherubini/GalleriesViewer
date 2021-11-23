@@ -28,11 +28,10 @@
                         <div class="px-0 py-0">Created: @item.DateCreation.ToString("MM/dd/yyyy") at @item.DateCreation.ToString("hh:mm tt") </div>
                         <div class="px-0 py-0">Last Update: @item.DateUpdate.ToString("MM/dd/yyyy") at @item.DateUpdate.ToString("hh:mm tt")</div>
                         <div class="d-flex align-items-center justify-content-between">
-                            <div class="px-0 py-1"><a asp-page="Index" asp-route-id="@item.Id">View Gallery</a></div>
+                            <div class="px-0 py-1"><a asp-page="Index" asp-route-id="@item.Id" asp-route-PageNB="1">View Gallery</a></div>
                             <div>
                                 <form method="post">
                                     <input type="submit" value="Delete" class="btn btn-sm rounded-pill btn-danger" asp-page-handler="DeleteGallery" asp-route-IdGallery="@item.Id" onclick="return confirm('Are you sure you want to delete this gallery ?')">
-                                    @*<input type="submit" value="Edit" class="btn btn-sm rounded-pill btn-info" asp-page-handler="EditGallery" asp-route-IdGallery="@item.Id">*@
                                 </form>
                                 <button type="button" class="btn btn-sm rounded-pill btn-info" data-toggle="ajax-modal" data-url="@Url.Page("Index", "GalleryModalPartialEdit", new { idGallery = item.Id, openedGallery = Model.Show })">
                                     Edit

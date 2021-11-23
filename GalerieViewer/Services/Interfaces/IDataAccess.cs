@@ -10,8 +10,10 @@ namespace GalerieViewer.Services
         void UpdateDateGalery(int id);
         List<GalerieViewModel> GetAllGaleries();
         GalerieFullViewModel GetGalerie(int id);
+        GalerieFullViewModel GetPaginatedGallery(int idGallery, int pageSize, int PageNB);
         ImageViewModel GetImage(int id);
         List<ImageViewModel> GetAllImagesItem(int id);
+        int[] GetListIdsImages(int idGallery);
         void AddImageInGalerie(ImageViewModel img, int id);
         int AddNewGallery(GalerieViewModel galerie);
         void DeleteImage(int id);

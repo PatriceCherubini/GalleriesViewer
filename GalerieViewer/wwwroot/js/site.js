@@ -41,6 +41,7 @@ $(function () {
 
     //When a button which as the attribute data-toggle = ajax-modal-image is clicked, trigger a function
     $('button[data-toggle="ajax-modal-image"]').click(function (event) {
+        event.stopPropagation();
         //get the value of the attribute data-url  
         var url = $(this).data('url');
         //load the result of the request (get url) => a partial view containing the modal to show
@@ -55,7 +56,7 @@ $(function () {
     imageplaceholderElement.on('click', '[data-save="modal"]', function (event) {
         event.preventDefault();
         var form = $(this).parents('.modal').find('form');
-         //get routing url as defined in the form 
+        //get routing url as defined in the form 
         var actionUrl = form.attr('action');
         var dataToSend = new FormData(form.get(0));
         //Ajax request that is triggered when the save button is clicked
@@ -78,9 +79,69 @@ $(function () {
                 //Close the de modal (hide it)
                 imageplaceholderElement.find('.modal').modal('hide');
                 //redirct to the UrlRedirct value => a refresh of the page with route to the value of the opened gallery
-               window.location.href = UrlRedirect;
+                window.location.href = UrlRedirect;
             }
         });
     });
+});
+
+$(function () {
+    var viewImagePlaceholderElement = $('#viewimage-modal-placeholder');
+
+    $('div[data-toggle="ajax-modal-viewimage"]').click(function (event) {
+        var url = $(this).data('url');
+        $.get(url).done(function (data) {
+            viewImagePlaceholderElement.html(data);
+            viewImagePlaceholderElement.find('.modal').modal('show');
+        });
+    });
+
+    viewImagePlaceholderElement.on('click', '[data-toggle="ajax-modal-navigateImage"]', function (event) {
+        var url = $(this).data('url');
+        $.get(url).done(function (data) {
+
+            var newBody = $('.modal-body', data);
+            viewImagePlaceholderElement.find('.modal-body').replaceWith(newBody);
+            viewImagePlaceholderElement.find('.modal').modal('show');
+        });
+
+        //var form = $(this).parents('.modal').find('form');
+        //var actionUrl = form.attr('action');
+        //var dataToSend = form.serialize();
+
+        //$.post(actionUrl, dataToSend).done(function (data) {
+
+        //    var newBody = $('.modal-body', data);
+        //    placeholderElement.find('.modal-body').replaceWith(newBody);
+
+        //    var isValid = newBody.find('[name="IsValid"]').val() == 'True';
+        //    var UrlRedirect = newBody.data('url');
+        //    if (isValid) {
+
+        //        placeholderElement.find('.modal').modal('hide');
+        //        window.location.href = UrlRedirect;
+        //    }
+        //});
+    });
+});
+
+//$(function () {
+//    var viewImagePlaceholderElement = $('#viewimage-modal-placeholder');
+
+//    $('button[data-toggle="ajax-modal-navigateImage"]').click(function (event) {
+//        alert("cliqué");
+//        //var url = $(this).data('url');
+//        //$.get(url).done(function (data) {
+
+//        //    var newBody = $('.modal-body', data);
+//        //    viewImagePlaceholderElement.find('.modal-body').replaceWith(newBody);
+//        //    viewImagePlaceholderElement.find('.modal').modal('show');
+//        //});
+//    });
+//});
+
+$('input[data-toggle="ajax-modal-image"]').click(function (e) {
+    // Do something
+    e.stopPropagation();
 });
 //// Write your JavaScript code.
