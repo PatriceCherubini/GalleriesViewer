@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GalerieViewer.ViewModels
 {
-    public class ImageViewModel : IImageViewModel
+    public class ImageViewModel 
     {
         public int GalerieId { get; set; }
         public int ImageItemId { get; set; }

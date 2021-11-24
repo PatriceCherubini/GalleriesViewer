@@ -105,40 +105,33 @@ $(function () {
             viewImagePlaceholderElement.find('.modal').modal('show');
         });
 
-        //var form = $(this).parents('.modal').find('form');
-        //var actionUrl = form.attr('action');
-        //var dataToSend = form.serialize();
-
-        //$.post(actionUrl, dataToSend).done(function (data) {
-
-        //    var newBody = $('.modal-body', data);
-        //    placeholderElement.find('.modal-body').replaceWith(newBody);
-
-        //    var isValid = newBody.find('[name="IsValid"]').val() == 'True';
-        //    var UrlRedirect = newBody.data('url');
-        //    if (isValid) {
-
-        //        placeholderElement.find('.modal').modal('hide');
-        //        window.location.href = UrlRedirect;
-        //    }
-        //});
     });
 });
 
 //$(function () {
 //    var viewImagePlaceholderElement = $('#viewimage-modal-placeholder');
 
-//    $('button[data-toggle="ajax-modal-navigateImage"]').click(function (event) {
-//        alert("cliqué");
-//        //var url = $(this).data('url');
-//        //$.get(url).done(function (data) {
+//    $('div[data-toggle="ajax-modal-viewimage"]').click(function (event) {
+//        var url = $(this).data('url');
+//        $.get(url).done(function (data) {
+//            viewImagePlaceholderElement.html(data);
+//            viewImagePlaceholderElement.find('.modal').modal('show');
+//        });
+//    });
 
-//        //    var newBody = $('.modal-body', data);
-//        //    viewImagePlaceholderElement.find('.modal-body').replaceWith(newBody);
-//        //    viewImagePlaceholderElement.find('.modal').modal('show');
-//        //});
+//    viewImagePlaceholderElement.on('click', '[data-toggle="ajax-modal-navigateImage"]', function (event) {
+//        var url = $(this).data('url');
+//        $.get(url).done(function (data) {
+
+//            var newBody = $('.modal-body', data);
+//            viewImagePlaceholderElement.find('.modal-body').replaceWith(newBody);
+//            viewImagePlaceholderElement.find('.modal').modal('show');
+//        });
+
 //    });
 //});
+
+
 
 $('input[data-toggle="ajax-modal-image"]').click(function (e) {
     // Do something

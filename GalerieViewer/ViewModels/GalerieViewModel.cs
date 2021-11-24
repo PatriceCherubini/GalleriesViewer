@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GalerieViewer.ViewModels
 {
-    public class GalerieViewModel : IGalerieViewModel
+    public class GalerieViewModel 
     {
         public int Id { get; set; }
         public int? nbImageItems { get; set; }

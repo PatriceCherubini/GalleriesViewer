@@ -1,5 +1,6 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+/* import what we need to override */
 
 a.navbar-brand {
     white-space: normal;
@@ -12,12 +13,9 @@ a.navbar-brand {
     font-size: 0.9rem;
 }
 
-/* Provide sufficient contrast against white background */
-
-
 .btn-sm, .btn-group-sm > .btn {
     padding: 0.15rem 0.3rem;
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     line-height: 1.5;
     border-radius: 0.2rem;
 }
@@ -28,7 +26,7 @@ a.navbar-brand {
 }
 
 .container-imageCard .card {
-    transition: transform .1s; /* Animation */
+    transition: transform .3s; /* Animation */
     cursor: pointer;
 }
 
@@ -43,6 +41,8 @@ a.navbar-brand {
 
 .container-imageCard .card-img-overlay {
     background-color: rgb(0, 0, 0,.8);
+    display:flex;
+    flex-direction:column-reverse;
     position: absolute;
     height: 45%;
     top: 55%;
@@ -51,18 +51,28 @@ a.navbar-brand {
     left: 0;
 }
 
+.buttons-edit {
+    display: flex;
+    justify-content:flex-end;
+}
+    .buttons-edit * {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        margin-right: 0.1rem;
+        margin-left: 0.1rem;
+    }
+
 .container-imageCard p {
     line-height: 120%;
 }
 
-.detail-galerie{
-
+.detail-galerie {
     border-left: solid;
     border-left-width: medium;
     border-left-color: #cf2e1f;
 }
 
-.detail-galerie * {
+    .detail-galerie * {
         font-size: 0.8rem;
     }
 
@@ -110,20 +120,13 @@ a.navbar-brand {
         font-weight: 400;
         box-shadow: none;
     }*/
+
+
+/* Style of the modal showing pictures */
+/* ----------------------------------------------------*/
 .modal {
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
-}
-
-/*#containerHeaderImg
-{
-    display: flex;
-    justify-content:space-between;
-}*/
-
-#nomImage {
-    text-align: center;
-    font-size: 1.4rem;
 }
 
 #showImage.modal-dialog {
@@ -132,9 +135,15 @@ a.navbar-brand {
     overflow-y: auto;
     overflow-x: auto;
     width: auto;
-    min-width: 50%;
+    max-height: 50%;
     max-width: 60%;
 }
+
+#nomImage {
+    text-align: center;
+    font-size: 1.4rem;
+}
+
 /* Add Animation - Zoom in the Modal */
 #showImage .modal-content {
     animation-name: zoom;
@@ -148,21 +157,56 @@ a.navbar-brand {
     border-bottom-left-radius: 0.3rem;
 }
 
+#showImage .card-img-overlay {
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    opacity: 0;
+    width: 100%;
+    padding-top: 5%;
+    padding-bottom: 2%;
+    background-color: rgba(0,0,0,0.8);
+    transition: .5s ease;
+}
+
+    #showImage .card-img-overlay p {
+        margin-left: 5%;
+        margin-right: 5%;
+        color: antiquewhite;
+    }
+
+    #showImage .card-img:hover + .card-img-overlay, #showImage .card-img-overlay:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    width: 8%;
+    color: #fff;
+    opacity: 0.5;
+    transition: opacity 0.15s ease;
+}
+
 #showImage #buttonNavigation {
+    display: flex;
+    justify-content: center;
+}
+/* ----------------------------------------------------*/
 
+#buttonsPage {
     display: flex;
     justify-content: center;
 }
 
-#buttonsPage{
-    display: flex;
-    justify-content: center;
-}
 #containerBtdAdd {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 @keyframes zoom {
     from {
         transform: scale(0)

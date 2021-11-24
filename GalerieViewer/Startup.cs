@@ -48,10 +48,7 @@ namespace GalerieViewer
             services.AddScoped<IDataAccess, DataAccessDB>();
             services.AddScoped<IGalerieService, GalerieService>();
             services.AddScoped<IListGalerieService, ListGalerieService>();
-            services.AddScoped<IGalerieViewModel, GalerieViewModel>();
             services.AddScoped<IPictureUploader, PictureUploader>();
-            services.AddScoped<GalerieFullViewModel>();
-            services.AddScoped<IListGaleriesViewModel, ListGaleriesViewModel>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

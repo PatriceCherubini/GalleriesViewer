@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GalerieViewer.Viewmodels
 {
-    public class ListGaleriesViewModel : IListGaleriesViewModel
+    public class ListGaleriesViewModel 
     {
         public ICollection<GalerieViewModel> ListeGaleries { get; set; }
         public int Show { get; set; }

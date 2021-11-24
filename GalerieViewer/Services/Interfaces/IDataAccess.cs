@@ -6,16 +6,16 @@ namespace GalerieViewer.Services
 {
     public interface IDataAccess
     {
-        void addGalleriesAndImages();
-        void UpdateDateGalery(int id);
         List<GalerieViewModel> GetAllGaleries();
         GalerieFullViewModel GetGalerie(int id);
         GalerieFullViewModel GetPaginatedGallery(int idGallery, int pageSize, int PageNB);
-        ImageViewModel GetImage(int id);
+        void UpdateDateGalery(int id);
         List<ImageViewModel> GetAllImagesItem(int id);
+        ImageViewModel GetImage(int id);
+        CarouselViewModel GetCarousel(int idGallery, int idImage);
         int[] GetListIdsImages(int idGallery);
-        void AddImageInGalerie(ImageViewModel img, int id);
-        int AddNewGallery(GalerieViewModel galerie);
+        int AddGallery(GalerieViewModel galerie);
+        void AddImage(ImageViewModel img, int id);
         void DeleteImage(int id);
         void DeleteGallery(int id);
         void DeleteAllImages(int id);

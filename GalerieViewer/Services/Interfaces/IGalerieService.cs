@@ -11,6 +11,7 @@ namespace GalerieViewer.Services
         GalerieFullViewModel GetPaginatedGallery(int idGallery, int pageSize, int pageNB);
         ImageViewModel GetImage(int id);
         ViewImageViewModel ViewImage(int idImage, int idGallery);
+        CarouselViewModel ViewCarousel(int idImage, int idGallery);
         void AddImageInGalerie(ImageViewModel img);
         int AddNewGallery(GalerieViewModel gallery);
         void UpdateImage(ImageViewModel img);

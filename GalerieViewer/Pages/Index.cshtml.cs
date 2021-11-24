@@ -25,10 +25,12 @@ namespace GalerieViewer.Pages
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly ILogger<IndexModel> _logger;
         private IGalerieService _galerieService;
-        public int PageSize { get; set; } = 4;
+        public int PageSize { get; set; } = 10;
         [BindProperty(SupportsGet = true)]
         public int PageNB { get; set; } = 1;
         public int? Show { get; private set; }
+        [BindProperty(SupportsGet = true)]
+        public int id { get; set; }
         public string ErrorMessage { get; set; }
         public GalerieFullViewModel Galerie { get; set; }
         public IndexModel(ILogger<IndexModel> logger, IGalerieService galerieService, IWebHostEnvironment hostEnvironment)
@@ -37,16 +39,21 @@ namespace GalerieViewer.Pages
             _galerieService = galerieService;
             _hostEnvironment = hostEnvironment;
         }
-        public IActionResult OnGet(int id)
+        public IActionResult OnGet()
         {  
             Galerie = _galerieService.GetPaginatedGallery(id, PageSize, PageNB);
             Show = Galerie == null ? 0 : Galerie.Id;
+            id = Galerie == null ? 0 : Galerie.Id;
             return Page();
         }
 
-        public PartialViewResult OnGetViewImageModalPartial(int idImage, int id)
+        public PartialViewResult OnGetViewImageModalPartial(int idImage)
         {
-            return Partial("_ViewImageModalPartial", _galerieService.ViewImage(idImage, id));
+            return Partial("_ViewImageCarousel", _galerieService.ViewImage(idImage, id));
+        }
+        public PartialViewResult OnGetViewCarouselPartial(int idImage)
+        {
+            return Partial("_ViewImageModalPartial", _galerieService.ViewCarousel(idImage, id));
         }
         public PartialViewResult OnGetGalleryModalPartial(int openedGallery)
         {
@@ -67,7 +74,7 @@ namespace GalerieViewer.Pages
         public IActionResult OnPostDeleteImg(int idImage, int idGallery)
         {
             _galerieService.DeleteImage(idImage, idGallery);
-            return RedirectToPage("Index", new { id = idGallery, PageNB = PageNB});
+            return RedirectToPage("Index", new { id = idGallery, PageNB = 1});
         }
         public IActionResult OnPostDeleteGallery(int idGallery)
         {

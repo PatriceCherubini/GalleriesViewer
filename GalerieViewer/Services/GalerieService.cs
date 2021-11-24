@@ -53,13 +53,18 @@ namespace GalerieViewer.Services
            
            return new ViewImageViewModel { Image = GetImage(idImage), IdNext = next, IdPrevious = previous, Position = $"Picture {positionImageinGallery + 1} of {arrayIds.Length}" };
         }
+        public CarouselViewModel ViewCarousel(int idImage, int idGallery)
+        {
+            return _dataAccess.GetCarousel(idGallery, idImage);
+        }
+
         /// <summary>
         /// Add a new picture
         /// </summary>
         /// <param name="img">The ImageViewmodel with every parameters to add a new picture </param>
         public void AddImageInGalerie(ImageViewModel img)
         {
-            _dataAccess.AddImageInGalerie(img, img.GalerieId);
+            _dataAccess.AddImage(img, img.GalerieId);
             // Update the last Update date from the gallery where the new picture is added 
             _dataAccess.UpdateDateGalery(img.GalerieId);
         }
@@ -70,7 +75,7 @@ namespace GalerieViewer.Services
         /// <returns></returns>
         public int AddNewGallery(GalerieViewModel gallery)
         {
-            return _dataAccess.AddNewGallery(gallery);
+            return _dataAccess.AddGallery(gallery);
         }
         /// <summary>
         /// Delete a picture
@@ -136,7 +141,15 @@ namespace GalerieViewer.Services
 
         public GalerieFullViewModel GetPaginatedGallery(int idGallery, int pageSize, int pageNB)
         {
-            return _dataAccess.GetPaginatedGallery(idGallery, pageSize, pageNB);
+            try
+            {
+                var gallery = _dataAccess.GetPaginatedGallery(idGallery, pageSize, pageNB);
+                return gallery;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }
