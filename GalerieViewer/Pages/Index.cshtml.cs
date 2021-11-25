@@ -25,7 +25,8 @@ namespace GalerieViewer.Pages
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly ILogger<IndexModel> _logger;
         private IGalerieService _galerieService;
-        public int PageSize { get; set; } = 10;
+        [BindProperty]
+        public int PageSize { get; set; } = 5;
         [BindProperty(SupportsGet = true)]
         public int PageNB { get; set; } = 1;
         public int? Show { get; private set; }
@@ -49,7 +50,12 @@ namespace GalerieViewer.Pages
 
         public PartialViewResult OnGetViewImageModalPartial(int idImage)
         {
-            return Partial("_ViewImageCarousel", _galerieService.ViewImage(idImage, id));
+            return new PartialViewResult
+            {
+                ViewName = "_ViewImageCarousel",
+                ViewData = new ViewDataDictionary<ViewImageViewModel>(ViewData, _galerieService.ViewImage(idImage, id))
+            };
+           // return Partial("_ViewImageCarousel", _galerieService.ViewImage(idImage, id));
         }
         public PartialViewResult OnGetViewCarouselPartial(int idImage)
         {

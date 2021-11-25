@@ -90,48 +90,79 @@ $(function () {
 
     $('div[data-toggle="ajax-modal-viewimage"]').click(function (event) {
         var url = $(this).data('url');
+        var position = $(this).data('position')
         $.get(url).done(function (data) {
             viewImagePlaceholderElement.html(data);
-            viewImagePlaceholderElement.find('.modal').modal('show');
+            openModal();
+            currentSlide(position);
         });
-    });
-
-    viewImagePlaceholderElement.on('click', '[data-toggle="ajax-modal-navigateImage"]', function (event) {
-        var url = $(this).data('url');
-        $.get(url).done(function (data) {
-
-            var newBody = $('.modal-body', data);
-            viewImagePlaceholderElement.find('.modal-body').replaceWith(newBody);
-            viewImagePlaceholderElement.find('.modal').modal('show');
-        });
-
     });
 });
 
-//$(function () {
-//    var viewImagePlaceholderElement = $('#viewimage-modal-placeholder');
+// Open Image in Modal
+// --------------------------------------------------------------------
+//var imgToShow = $('#viewimage-modal-placeholder');
+//imgToShow.on('click', '[data-toggle="ajax-modal-navigateImage"]', function (event) {
 
-//    $('div[data-toggle="ajax-modal-viewimage"]').click(function (event) {
-//        var url = $(this).data('url');
-//        $.get(url).done(function (data) {
-//            viewImagePlaceholderElement.html(data);
-//            viewImagePlaceholderElement.find('.modal').modal('show');
-//        });
+   
+//    var actionUrl = $(this).data('url');
+//    $.ajax({
+//        url: actionUrl,
+//        method: 'get',
+//        processData: false,
+//        contentType: false
+//        /*function that is trigger */
+//    }).done(function (data) {
+
+//        //var newImage = data.find("#date-creation");
+//        var newBody = $('.modal-body', data);
+//        var newImage = newBody.find(".card-img");
+//        imgToShow.find('.card-img').replaceWith(newImage);
+//        //viewImagePlaceholderElement.find('#date-creation').replaceWith(newImage);
+//        //viewImagePlaceholderElement.find('.modal-body').replaceWith(newBody);
+//        // viewImagePlaceholderElement.find('.modal').modal('show');
 //    });
 
-//    viewImagePlaceholderElement.on('click', '[data-toggle="ajax-modal-navigateImage"]', function (event) {
-//        var url = $(this).data('url');
-//        $.get(url).done(function (data) {
-
-//            var newBody = $('.modal-body', data);
-//            viewImagePlaceholderElement.find('.modal-body').replaceWith(newBody);
-//            viewImagePlaceholderElement.find('.modal').modal('show');
-//        });
-
-//    });
 //});
+// --------------------------------------------------------------------
 
+// Script for Carousel
+//---------------------------------------------------------------------
 
+// Open the Modal
+function openModal() {
+    document.getElementById("carousel-pictures").style.display = "block";
+}
+
+// Close the Modal
+function closeModal() {
+    document.getElementById("carousel-pictures").style.display = "none";
+}
+
+// Show slides
+var slideIndex = 1;
+
+function currentSlide(n) {
+    showSlides(slideIndex = n);
+}
+
+function showSlides(n) {
+    var i;
+    var slides = document.getElementsByClassName("carousel-slides");
+    if (n >= slides.length) { slideIndex = 0 }
+    if (n < 0) { slideIndex = slides.length-1 }
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    slides[slideIndex].style.display = "block";
+
+}
+
+function plusSlides(n) {
+    showSlides(slideIndex += n);
+}
+
+//---------------------------------------------------------------------
 
 $('input[data-toggle="ajax-modal-image"]').click(function (e) {
     // Do something

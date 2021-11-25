@@ -1,7 +1,7 @@
 ﻿@model GalerieViewer.ViewModels.ViewImageViewModel
 
-<div class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document" id="showImage">
+<div class="modal fade" tabindex="-1" role="dialog" id="showImage">
+    <div class="modal-dialog" role="document" >
         <div class="modal-content">
             <div class="modal-body">
                 <div id="containerHeaderImg">
@@ -21,7 +21,7 @@
                 <div class="card">
                     <img class="card-img w-100" src="~/Images/@Model.Image.FileName" alt="@Model.Image.Description">
                     <div class="card-img-overlay">
-                        <p>@Model.Image.DateCreation</p>
+                        <p id="date-creation">@Model.Image.DateCreation</p>
                         <p id="descriptionImage">@Model.Image.Description</p>
                         <a data-toggle="ajax-modal-navigateImage" class="carousel-control-prev @((Model.IdPrevious == null)?"invisible":"")" data-url="@Url.Page("Index", "ViewImageModalPartial", new { idImage = Model.IdPrevious})">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
