@@ -1,7 +1,10 @@
 ﻿@model Viewmodels.ListGaleriesViewModel
-
-<h4>Galleries</h4>
-
+<div id="list-galleries-header">
+    <h2 class="m-2">Galleries</h2>
+    <div>
+        <button type="button" class="btn btn-big btn-primary" data-toggle="ajax-modal" data-url="@Url.Page("Index", "GalleryModalPartial", new { openedGallery = Model.Show })">Add Gallery</button>
+    </div>
+</div>
 <div class="accordion" id="accordionMenu">
     @if (Model.ListeGaleries.Count() == 0)
     {
@@ -13,20 +16,20 @@
         {
             <div class="card">
                 <div class="card-header py-1 px-2">
-                    <h2 class="mb-0 ">
+                    <div class="mb-0 ">
                         <button class="btn btn-link btn-block text-left p-1" type="button" data-toggle="collapse" data-target="#selectGallery_@(item.Id)" aria-expanded="false">
                             <div class="d-flex align-items-center justify-content-between bg-light px-0 py-0">
                                 <div>@item.Name</div>
                                 <div class="badge badge-pill badge-info">@item.nbImageItems</div>
                             </div>
                         </button>
-                    </h2>
+                    </div>
                 </div>
                 <div id="selectGallery_@(item.Id)" class="@((Model.Show==@item.Id)?"show":"collapse")" aria-labelledby="headingOne" data-parent="#accordionMenu">
-                    <div class="card-body detail-galerie p-2">
-                        <div class="px-0 py-1">@item.Description</div>
-                        <div class="px-0 py-0">Created: @item.DateCreation.ToString("MM/dd/yyyy") at @item.DateCreation.ToString("hh:mm tt") </div>
-                        <div class="px-0 py-0">Last Update: @item.DateUpdate.ToString("MM/dd/yyyy") at @item.DateUpdate.ToString("hh:mm tt")</div>
+                    <div class="card-body detail-galerie">
+                        <div class="px-0 pt-1 pb-2">@item.Description</div>
+                        <div class="px-0 py-0"><small>Created: @item.DateCreation.ToString("MM/dd/yyyy") at @item.DateCreation.ToString("hh:mm tt")</small></div>
+                        <div class="px-0 py-0"><small>Last Update: @item.DateUpdate.ToString("MM/dd/yyyy") at @item.DateUpdate.ToString("hh:mm tt")</small></div>
                         <div class="d-flex align-items-center justify-content-between pt-1">
                             <div class="px-0 py-1"><a asp-page="Index" asp-route-id="@item.Id" asp-route-PageNB="1">View Gallery</a></div>
                             <div class="buttons-edit">
@@ -45,8 +48,6 @@
     }
 </div>
 <hr />
-<button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-url="@Url.Page("Index", "GalleryModalPartial", new { openedGallery = Model.Show })">
-    Add new gallery
-</button>
+
 
 

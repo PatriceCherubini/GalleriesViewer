@@ -85,6 +85,7 @@ $(function () {
     });
 });
 
+//Create modal from partialview and open it at a specific slide
 $(function () {
     var viewImagePlaceholderElement = $('#viewimage-modal-placeholder');
 
@@ -99,32 +100,33 @@ $(function () {
     });
 });
 
-// Open Image in Modal
-// --------------------------------------------------------------------
-//var imgToShow = $('#viewimage-modal-placeholder');
-//imgToShow.on('click', '[data-toggle="ajax-modal-navigateImage"]', function (event) {
+ /* Open Image in Modal
+ --------------------------------------------------------------------
+var imgToShow = $('#viewimage-modal-placeholder');
+imgToShow.on('click', '[data-toggle="ajax-modal-navigateImage"]', function (event) {
 
    
-//    var actionUrl = $(this).data('url');
-//    $.ajax({
-//        url: actionUrl,
-//        method: 'get',
-//        processData: false,
-//        contentType: false
-//        /*function that is trigger */
-//    }).done(function (data) {
+    var actionUrl = $(this).data('url');
+    $.ajax({
+        url: actionUrl,
+        method: 'get',
+        processData: false,
+        contentType: false
+        //function that is trigger 
+    }).done(function (data) {
 
-//        //var newImage = data.find("#date-creation");
-//        var newBody = $('.modal-body', data);
-//        var newImage = newBody.find(".card-img");
-//        imgToShow.find('.card-img').replaceWith(newImage);
-//        //viewImagePlaceholderElement.find('#date-creation').replaceWith(newImage);
-//        //viewImagePlaceholderElement.find('.modal-body').replaceWith(newBody);
-//        // viewImagePlaceholderElement.find('.modal').modal('show');
-//    });
+        var newImage = data.find("#date-creation");
+        var newBody = $('.modal-body', data);
+        var newImage = newBody.find(".card-img");
+        imgToShow.find('.card-img').replaceWith(newImage);
+        viewImagePlaceholderElement.find('#date-creation').replaceWith(newImage);
+        viewImagePlaceholderElement.find('.modal-body').replaceWith(newBody);
+         viewImagePlaceholderElement.find('.modal').modal('show');
+    });
 
-//});
-// --------------------------------------------------------------------
+});
+--------------------------------------------------------------------
+*/
 
 // Script for Carousel
 //---------------------------------------------------------------------
@@ -139,13 +141,12 @@ function closeModal() {
     document.getElementById("carousel-pictures").style.display = "none";
 }
 
-// Show slides
 var slideIndex = 1;
-
+// Set current slides
 function currentSlide(n) {
     showSlides(slideIndex = n);
 }
-
+// Show/hide slides
 function showSlides(n) {
     var i;
     var slides = document.getElementsByClassName("carousel-slides");
@@ -155,9 +156,9 @@ function showSlides(n) {
         slides[i].style.display = "none";
     }
     slides[slideIndex].style.display = "block";
-
 }
 
+// Go to next or prev slide
 function plusSlides(n) {
     showSlides(slideIndex += n);
 }

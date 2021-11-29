@@ -11,80 +11,81 @@
 </div>
 <div class="container-fluid border border-dark">
     <div class="row flex-xl-nowrap">
-        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 m-2 p-1">
+        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 m-2 p-2 col-left">
             <div id="ListGalleries" data-url="@Url.Action("Index")">
                 @await Component.InvokeAsync("ListGaleries", new { show = Model.Show })
             </div>
         </div>
-        <div class="col m-2 p-2">
-            <div class="p-3">
-                @if (Model.Galerie == null)
+        <div class="col m-2 p-4" id="container-gallery">
+
+            @if (Model.Galerie == null)
+            {
+                <p class="row">No gallery found</p>
+                <hr />
+            }
+            else
+            {
+                <p class="row">Galerie: @Model.Galerie.Name</p>
+                @if (Model.Galerie.ListeImages.Count() == 0)
                 {
-                    <p class="row">No gallery found</p>
+                    <p class="row">This gallery is empty</p>
                     <hr />
                 }
-                else
-                {
-                    <p class="row">Galerie: @Model.Galerie.Name</p>
-                    @if (Model.Galerie.ListeImages.Count() == 0)
-                    {
-                        <p class="row">This gallery is empty</p>
-                        <hr />
-                    }
-                    <div class="container-imageCard row">
-                        @{ if (Model.Galerie.ListeImages.Count() != 0)
+                <div class="container-imageCard row">
+                    @{ if (Model.Galerie.ListeImages.Count() != 0)
+                        {
+                            var i = 0;
+                            foreach (var imageItem in Model.Galerie.ListeImages)
                             {
-                                var i = 0;
-                                foreach (var imageItem in Model.Galerie.ListeImages)
-                                {
-                                    
-                                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 p-2">
-                                        <div class="card rounded bg-dark" data-toggle="ajax-modal-viewimage" data-position="@((Model.PageSize)*(Model.PageNB - 1) + i)" data-url="@Url.Page("Index", "ViewCarouselPartial", new { idImage = imageItem.ImageItemId, id = Model.Galerie.Id })" >
-                                            <div class="embed-responsive embed-responsive-4by3">
-                                                <img src="~/Images/@imageItem.FileName" alt="@imageItem.Description" class="img-fluid card-img embed-responsive-item">
-                                            </div>
-                                            <div class="py-2 px-2 card-img-overlay">
-                                                <div class="d-flex align-items-center justify-content-between">
-                                                    <div>
-                                                        <p class="small text-muted m-0 p-0">
-                                                            @imageItem.DateCreation.ToString("MM/dd/yyyy")<br />
-                                                            @imageItem.DateCreation.ToString("hh:mm tt")
-                                                        </p>
-                                                    </div>
-                                                    <div class="buttons-edit">
-                                                        <form method="post" class="m-0 p-0">
-                                                            <input type="submit" value="Delete" data-toggle="ajax-modal-image" class="btn btn-sm rounded-pill btn-danger" asp-page-handler="DeleteImg" asp-route-idImage="@imageItem.ImageItemId" asp-route-IdGallery="@imageItem.GalerieId" asp-route-PageNB="@Model.PageNB" onclick="return confirm('Are you sure you want to delete this picture ?')">
-                                                        </form>
-                                                        <button type="button" class="btn btn-sm rounded-pill btn-info" data-toggle="ajax-modal-image" data-url="@Url.Page("Index", "ImageModalPartialEdit", new { idImage = imageItem.ImageItemId })">
-                                                            Edit
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <h6 class="mb-2 text-white">@imageItem.Nom</h6>
-                                            </div>
+                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 p-2">
+                                    <div class="card rounded bg-dark" data-toggle="ajax-modal-viewimage" data-position="@((Model.PageSize)*(Model.PageNB - 1) + i)" data-url="@Url.Page("Index", "ViewCarouselPartial", new { idImage = imageItem.ImageItemId, id = Model.Galerie.Id })">
+                                        <div class="embed-responsive embed-responsive-4by3">
+                                            <img src="~/Images/@imageItem.FileName" alt="@imageItem.Description" class="img-fluid card-img embed-responsive-item">
                                         </div>
-                                      </div> 
-                                    i++;
-                                }
+                                        <div class="py-2 px-2 card-img-overlay">
+                                            <div class="d-flex align-items-center justify-content-between">
+                                                <div>
+                                                    <p class="small text-muted m-0 p-0">
+                                                        @imageItem.DateCreation.ToString("MM/dd/yyyy")<br />
+                                                        @imageItem.DateCreation.ToString("hh:mm tt")
+                                                    </p>
+                                                </div>
+                                                <div class="buttons-edit">
+                                                    <form method="post" class="m-0 p-0">
+                                                        <input type="submit" value="Delete" data-toggle="ajax-modal-image" class="btn btn-sm rounded-pill btn-danger" asp-page-handler="DeleteImg" asp-route-idImage="@imageItem.ImageItemId" asp-route-IdGallery="@imageItem.GalerieId" asp-route-PageNB="@Model.PageNB" onclick="return confirm('Are you sure you want to delete this picture ?')">
+                                                    </form>
+                                                    <button type="button" class="btn btn-sm rounded-pill btn-info" data-toggle="ajax-modal-image" data-url="@Url.Page("Index", "ImageModalPartialEdit", new { idImage = imageItem.ImageItemId })">
+                                                        Edit
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <h6 class="mb-2 text-white">@imageItem.Nom</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                i++;
                             }
                         }
-                        <div class="col-xl-3 col-lg-4 col-sm-12 p-2" id="containerBtdAdd">
-                            <button type="button" class="btn btn-primary" data-toggle="ajax-modal-image" data-url="@Url.Page("Index", "ImageModalPartial", new { idGallery = Model.Galerie.Id })">
-                                Add new image
-                            </button>
-                        </div>
+                    }
+                    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 p-2" id="containerBtdAdd">
+                        <button type="button" class="btn btn-big btn-primary btn-add" data-toggle="ajax-modal-image" data-url="@Url.Page("Index", "ImageModalPartial", new { idGallery = Model.Galerie.Id })">
+                            <svg class="icon-plus" viewBox="0 0 5 5" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
+                            </svg>
+                        </button>
                     </div>
-                    <hr />
-                    <div class="row" id="buttonsPage">
-                        <a asp-page="Index" class="btn btn-secondary mx-1 @((Model.PageNB <= 1)?"invisible":"")" asp-route-id="@Model.Galerie.Id" asp-route-PageNB="@(Model.PageNB - 1)">
-                            Précédent
-                        </a>
-                        <a asp-page="Index" class="btn btn-secondary mx-1 @((Model.PageNB == Model.Galerie.TotalPages)?"invisible":"")" asp-route-id="@Model.Galerie.Id" asp-route-PageNB="@(Model.PageNB + 1)">
-                            Suivant
-                        </a>
-                    </div>
-                }
-            </div>
+                </div>
+                <hr />
+                <div class="row" id="buttonsPage">
+                    <a asp-page="Index" class="btn btn-big btn-secondary mx-1 @((Model.PageNB <= 1)?"invisible":"")" asp-route-id="@Model.Galerie.Id" asp-route-PageNB="@(Model.PageNB - 1)">
+                        &#10094; Previous
+                    </a>
+                    <a asp-page="Index" class="btn btn-big btn-secondary mx-1 @((Model.PageNB == Model.Galerie.TotalPages)?"invisible":"")" asp-route-id="@Model.Galerie.Id" asp-route-PageNB="@(Model.PageNB + 1)">
+                        Next &#10095;
+                    </a>
+                </div>
+            }
+
         </div>
     </div>
 </div>

@@ -2,6 +2,38 @@
 for details on configuring this project to bundle and minify static web assets. */
 /* import what we need to override */
 
+:root {
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --primary: #00c2cb;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --font-neo-sans: neo-sans,sans-serif;
+}
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -13,68 +45,39 @@ a.navbar-brand {
     font-size: 0.9rem;
 }
 
-.btn-sm, .btn-group-sm > .btn {
-    padding: 0.15rem 0.3rem;
-    font-size: 0.8rem;
-    line-height: 1.5;
-    border-radius: 0.2rem;
+/* Main container 
+-----------------------------------------------
+*/
+
+.container-fluid {
+    max-width: 1440px;
+}
+
+.col-left, #container-gallery {
+    background-color: aliceblue;
 }
 
 
-.container-imageCard .card:hover .card-img {
-    opacity: 1;
-}
+/* Left menu showing list of galleries 
+-------------------------------------------------
+*/
 
-.container-imageCard .card {
-    transition: transform .3s; /* Animation */
-    cursor: pointer;
-}
-
-    .container-imageCard .card:hover {
-        transform: scale(1.05);
-    }
-
-.container-imageCard .card-img {
-    object-fit: cover;
-    opacity: 0.8;
-}
-
-.container-imageCard .card-img-overlay {
-    background-color: rgb(0, 0, 0,.8);
-    display:flex;
-    flex-direction:column-reverse;
-    position: absolute;
-    height: 45%;
-    top: 55%;
-    right: 0;
-    bottom: 0;
-    left: 0;
-}
-
-.buttons-edit {
+#list-galleries-header {
     display: flex;
-    justify-content:flex-end;
-}
-    .buttons-edit * {
-        padding-left: 0.5rem;
-        padding-right: 0.5rem;
-        margin-right: 0.1rem;
-        margin-left: 0.1rem;
-    }
-
-.container-imageCard p {
-    line-height: 120%;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
 }
 
 .detail-galerie {
     border-left: solid;
     border-left-width: medium;
-    border-left-color: #cf2e1f;
+    border-left-color: var(--primary);
+    padding: 1rem;
 }
-
-    .detail-galerie * {
-        font-size: 0.8rem;
-    }
 
     .detail-galerie a {
         color: #cf2e1f;
@@ -87,46 +90,61 @@ a.navbar-brand {
             text-decoration: none;
         }
 
-.monImage:hover {
-    opacity: 0.2;
+/*
+Gallery display in Main container
+----------------------------------------------
+*/
+#container-gallery .card:hover .card-img {
+    opacity: 1;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+#container-gallery .card {
+    transition: transform .3s; /* Animation */
+    cursor: pointer;
 }
 
-.btn-link {
-    font-weight: 200;
-    color: #5a6470;
-    text-decoration: none;
-    border-radius: 0px;
-    transition: transform .1s;
-}
-
-    .btn-link:hover {
-        font-weight: 400;
-        color: #1b1d1f;
-        text-decoration: none;
-        transform: scale(1.03);
+    #container-gallery .card:hover {
+        transform: scale(1.05);
     }
 
-.formGallery * {
-    font-size: 0.8rem;
+#container-gallery .card-img {
+    object-fit: cover;
+    opacity: 0.8;
 }
-/*    .btn-link:focus, .btn-link.focus {
-        text-decoration: none;
-        font-weight: 400;
-        box-shadow: none;
-    }*/
 
-/*
+#container-gallery .card-img-overlay {
+    background-color: rgb(0, 0, 0,.8);
+    display: flex;
+    flex-direction: column-reverse;
+    position: absolute;
+    height: 45%;
+    top: 55%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
 
-Carousel Modal
+.container-imageCard p {
+    line-height: 120%;
+}
+
+#buttonsPage {
+    display: flex;
+    justify-content: center;
+}
+
+#containerBtdAdd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container-gallery hr {
+    border-top: 2px solid rgba(0,0,0,.5);
+}
+/* Carousel Modal
 ---------------------------------------------------------
 */
-
 #carousel-pictures {
     display: none;
     position: fixed;
@@ -183,15 +201,18 @@ Carousel Modal
         font-size: 35px;
         font-weight: bold;
     }
+
         #carousel-pictures .close:hover,
         .close:focus {
             color: #999;
             text-decoration: none;
             cursor: pointer;
         }
+
     #carousel-pictures .carousel-slides {
         display: none;
     }
+
     #carousel-pictures .prev,
     #carousel-pictures .next {
         cursor: pointer;
@@ -209,19 +230,19 @@ Carousel Modal
         -webkit-user-select: none;
     }
 
-/* Position the "next button" to the right */
+    /* Position the "next button" to the right */
     #carousel-pictures .next {
         right: 0;
         border-radius: 3px 0 0 3px;
     }
 
-    /* On hover, add a black background color with a little bit see-through */
+        /* On hover, add a black background color with a little bit see-through */
         #carousel-pictures .prev:hover,
         #carousel-pictures .next:hover {
             background-color: rgba(0, 0, 0, 0.8);
         }
 
-/* Number text (1/3 etc) */
+    /* Number text (1/3 etc) */
     #carousel-pictures .numbertext {
         color: #f2f2f2;
         font-size: 12px;
@@ -229,6 +250,101 @@ Carousel Modal
         position: absolute;
         top: 0;
     }
+
+/*
+Global elements
+---------------------------------------------------
+*/
+.btn-sm, .btn-group-sm > .btn {
+    padding: 0.15rem 0.3rem;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.btn-add{
+    width: 8rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.btn-big {
+    border-radius: 3.75rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-weight: 600;
+    font-variant: small-caps;
+    transition: 25ms ease;
+    line-height: 1.5;
+}
+
+.btn-big:hover {
+transform: scale(1.05);
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: var(--primary);  
+    border-color: var(--primary);
+}
+
+.btn-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+    background-color: transparent;
+    border-width: 3px;
+}
+
+.btn-link {
+    font-weight: 400;
+    font-size: 1.1rem;
+    color: #5a6470;
+    text-decoration: none;
+    border-radius: 0px;
+}
+
+    .btn-link:hover {
+        font-weight: 600;
+        color: #1b1d1f;
+        text-decoration: none;
+    }
+    .btn-link:focus, .btn-link.focus {
+        text-decoration: none;
+        box-shadow: none;
+    }
+.icon-plus {
+    width:1.5rem;
+}
+
+.icon-plus > path {
+    fill: white;
+    stroke: white;
+    stroke-width: 0.01rem;
+    stroke-linejoin: round;
+}
+/* container of Edit/Delete buttons  
+----------------------------------------------------
+*/
+.buttons-edit {
+    display: flex;
+    justify-content:flex-end;
+}
+    .buttons-edit * {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        margin-right: 0.1rem;
+        margin-left: 0.1rem;
+    }
+
+.monImage:hover {
+    opacity: 0.2;
+}
+
+
+.formGallery * {
+    font-size: 0.8rem;
+}
+
 /* Style of the modal showing pictures */
 /* ----------------------------------------------------*/
 /*.modal {
@@ -271,8 +387,6 @@ Carousel Modal
 }
 
 /* Add Animation - Zoom in the Modal */
-
-
 
 #showImage .modal-footer {
     display: grid;
@@ -319,17 +433,6 @@ Carousel Modal
     justify-content: center;
 }
 /* ----------------------------------------------------*/
-
-#buttonsPage {
-    display: flex;
-    justify-content: center;
-}
-
-#containerBtdAdd {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 @keyframes zoom {
     from {
@@ -406,11 +509,13 @@ button.accept-policy {
 html {
     position: relative;
     min-height: 100%;
+    
 }
 
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+    font-family: var(--font-neo-sans);
 }
 
 .footer {
