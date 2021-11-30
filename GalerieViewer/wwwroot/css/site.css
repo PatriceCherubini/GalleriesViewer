@@ -55,12 +55,19 @@ a.navbar-brand {
 
 .col-left, #container-gallery {
     background-color: aliceblue;
+    padding-right: 1.2rem;
+    padding-left: 1.2rem;
 }
 
 
 /* Left menu showing list of galleries 
 -------------------------------------------------
 */
+/*
+#list-galleries {
+    padding-right: 1.5rem;
+    padding-left: 1.5rem;
+}*/
 
 #list-galleries-header {
     display: flex;
@@ -94,6 +101,14 @@ a.navbar-brand {
 Gallery display in Main container
 ----------------------------------------------
 */
+
+.gallery-name {
+    padding-left: 1.2rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 0.6rem;
+}
 #container-gallery .card:hover .card-img {
     opacity: 1;
 }
@@ -263,24 +278,27 @@ Global elements
 }
 
 .btn-add{
-    width: 8rem;
+    width: 5rem;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center
 }
 .btn-big {
     border-radius: 3.75rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.6rem;
+    padding-right: 0.8rem;
     font-weight: 600;
     font-variant: small-caps;
     transition: 25ms ease;
     line-height: 1.5;
 }
 
-.btn-big:hover {
-transform: scale(1.05);
-}
+    .btn-big:hover {
+        transform: scale(1.05);
+        background-color: #138496;
+        border-color: #138496;
+    }
 
 .btn-primary {
     color: #fff;
@@ -313,7 +331,7 @@ transform: scale(1.05);
         box-shadow: none;
     }
 .icon-plus {
-    width:1.5rem;
+    width:1.2rem;
 }
 
 .icon-plus > path {

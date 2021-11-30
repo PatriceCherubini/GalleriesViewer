@@ -1,4 +1,5 @@
-﻿using GalerieViewer.Models;
+﻿using GalerieViewer.Common;
+using GalerieViewer.Models;
 using GalerieViewer.Services;
 using GalerieViewer.ViewModels;
 using Microsoft.EntityFrameworkCore;
@@ -66,6 +67,7 @@ namespace GalerieViewer.Data
                 DateCreation = galerie.DateCreation,
                 DateUpdate = galerie.DateUpdate,
                 Description = galerie.Description,
+                SortedBy = galerie.SortedBy,
                 ListeImages = GetAllImagesItem(galerie.GalerieId)
             };
 
@@ -73,7 +75,6 @@ namespace GalerieViewer.Data
         public GalerieFullViewModel GetPaginatedGallery(int idGallery, int pageSize, int PageNB)
         {
             var galerie = _context.Galeries.Where(g => g.GalerieId == idGallery && g.IsDeleted == false)
-                                           .Include("ImageItems")
                                            .FirstOrDefault();
             if (galerie == null)
             {
@@ -94,6 +95,7 @@ namespace GalerieViewer.Data
                 DateUpdate = galerie.DateUpdate,
                 Description = galerie.Description,
                 nbImageItems = nbImages,
+                SortedBy = galerie.SortedBy,
                 TotalPages = (int)Math.Ceiling(decimal.Divide(nbImages, pageSize)),
                 ListeImages = GetPaginatedImagesItem(galerie.GalerieId, pageSize, PageNB)
             };
@@ -134,8 +136,9 @@ namespace GalerieViewer.Data
                                     {
                                         ImageItemId = i.ImageItemId,
                                         GalerieId = i.GalerieId,
-                                        Nom = i.Nom,
+                                        Name = i.Name,
                                         DateCreation = i.DateCreation,
+                                        DateUpload = i.DateUpload,
                                         Description = i.Description,
                                         FileName = i.FileName
                                     })
@@ -155,8 +158,9 @@ namespace GalerieViewer.Data
                                     {
                                         ImageItemId = i.ImageItemId,
                                         GalerieId = i.GalerieId,
-                                        Nom = i.Nom,
+                                        Name = i.Name,
                                         DateCreation = i.DateCreation,
+                                        DateUpload = i.DateUpload,
                                         Description = i.Description,
                                         FileName = i.FileName
                                     }).ToList();
@@ -173,8 +177,9 @@ namespace GalerieViewer.Data
                                       {
                                           ImageItemId = i.ImageItemId,
                                           GalerieId = i.GalerieId,
-                                          Nom = i.Nom,
+                                          Name = i.Name,
                                           DateCreation = i.DateCreation,
+                                          DateUpload = i.DateUpload,
                                           Description = i.Description,
                                           FileName = i.FileName
                                       })
@@ -250,6 +255,16 @@ namespace GalerieViewer.Data
             _context.SaveChanges();
         }
 
+        public GalerieFullViewModel UpdateSort(int id, SortType sortedBy)
+        {
+            var updatedGallery = _context.Galeries.Where(i => i.GalerieId == id).FirstOrDefault();
+            updatedGallery.SortedBy = sortedBy;
+
+            _context.SaveChanges();
+
+            return GetGalerie(id);
+        }
+
         /// <summary>
         /// Add a new picture in a gallery (and in the context)
         /// </summary>
@@ -264,7 +279,7 @@ namespace GalerieViewer.Data
             galerie.DateUpdate = DateTime.Now;
             galerie.ImageItems.Add(new ImageItem()
             {
-                Nom = img.Nom,
+                Name = img.Name,
                 Description = img.Description,
                 DateCreation = img.DateCreation,
                 DateUpload = DateTime.Now,
@@ -307,8 +322,9 @@ namespace GalerieViewer.Data
             var updatedImg = _context.ImageItems.Where(i => i.ImageItemId == img.ImageItemId).FirstOrDefault();
             updatedImg.DateCreation = img.DateCreation;
             updatedImg.Description = img.Description;
-            updatedImg.Nom = img.Nom;
+            updatedImg.Name = img.Name;
             updatedImg.FileName = img.FileName;
+            updatedImg.DateUpload = DateTime.Now;
 
             _context.SaveChanges();
         }

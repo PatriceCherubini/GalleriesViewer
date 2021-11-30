@@ -1,5 +1,6 @@
 ﻿@page "{id=1}/{PageNB=1}"
 @model IndexModel
+@using GalerieViewer.Common;
 @{
     ViewData["Title"] = "Home page";
 }
@@ -11,8 +12,8 @@
 </div>
 <div class="container-fluid border border-dark">
     <div class="row flex-xl-nowrap">
-        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 m-2 p-2 col-left">
-            <div id="ListGalleries" data-url="@Url.Action("Index")">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 m-2 col-left">
+            <div id="list-galleries" data-url="@Url.Action("Index")">
                 @await Component.InvokeAsync("ListGaleries", new { show = Model.Show })
             </div>
         </div>
@@ -20,12 +21,23 @@
 
             @if (Model.Galerie == null)
             {
-                <p class="row">No gallery found</p>
+                <div class="row gallery-name">No gallery found</div>
                 <hr />
             }
             else
             {
-                <p class="row">Galerie: @Model.Galerie.Name</p>
+                <div class="row gallery-name">
+                    <div>
+                        Gallery: @Model.Galerie.Name
+                    </div>
+                    <div>
+                        Sort By:
+                        <form asp-page-handler="Sort" method="post">
+                            <select asp-for="SortingList" asp-items="Html.GetEnumSelectList(typeof (SortType))"></select>
+                            <input type="submit" value="Sort" class="btn btn-sm btn-primary">
+                        </form>
+                    </div>
+                </div>
                 @if (Model.Galerie.ListeImages.Count() == 0)
                 {
                     <p class="row">This gallery is empty</p>
@@ -37,7 +49,7 @@
                             var i = 0;
                             foreach (var imageItem in Model.Galerie.ListeImages)
                             {
-                                <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 p-2">
+                                <div class="col-xl-4 col-lg-6 col-md-12 col-sm-12 p-2">
                                     <div class="card rounded bg-dark" data-toggle="ajax-modal-viewimage" data-position="@((Model.PageSize)*(Model.PageNB - 1) + i)" data-url="@Url.Page("Index", "ViewCarouselPartial", new { idImage = imageItem.ImageItemId, id = Model.Galerie.Id })">
                                         <div class="embed-responsive embed-responsive-4by3">
                                             <img src="~/Images/@imageItem.FileName" alt="@imageItem.Description" class="img-fluid card-img embed-responsive-item">
@@ -59,7 +71,7 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                            <h6 class="mb-2 text-white">@imageItem.Nom</h6>
+                                            <h6 class="mb-2 text-white">@imageItem.Name</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -69,9 +81,10 @@
                     }
                     <div class="col-xl-4 col-lg-6 col-md-6 col-sm-12 p-2" id="containerBtdAdd">
                         <button type="button" class="btn btn-big btn-primary btn-add" data-toggle="ajax-modal-image" data-url="@Url.Page("Index", "ImageModalPartial", new { idGallery = Model.Galerie.Id })">
-                            <svg class="icon-plus" viewBox="0 0 5 5" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M2 1 h1 v1 h1 v1 h-1 v1 h-1 v-1 h-1 v-1 h1 z" />
+                            <svg class="icon-plus" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4 1 h2 v3 h3 v2 h-3 v3 h-2 v-3 h-3 v-2 h3 v-3 z" />
                             </svg>
+                            <div>Add</div>
                         </button>
                     </div>
                 </div>

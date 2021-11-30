@@ -1,4 +1,4 @@
-﻿using GalerieViewer.Models;
+﻿using GalerieViewer.Common;
 using GalerieViewer.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -7,8 +7,9 @@ namespace GalerieViewer.Services
 {
     public interface IGalerieService
     {
-        GalerieFullViewModel GenerateGalerie (int id);
+        GalerieFullViewModel GetGallery(int id);
         GalerieFullViewModel GetPaginatedGallery(int idGallery, int pageSize, int pageNB);
+        GalerieFullViewModel GetPaginatedGallery(int idGallery, int pageSize, int PageNB, string sortedBy);
         ImageViewModel GetImage(int id);
         ViewImageViewModel ViewImage(int idImage, int idGallery);
         CarouselViewModel ViewCarousel(int idImage, int idGallery);
@@ -19,5 +20,6 @@ namespace GalerieViewer.Services
         void DeleteImage(int idImage, int idGallery);
         void DeleteGallery(int idGallery);
         string UploadImage(string root, string folder, ImageViewModel image);
+        GalerieFullViewModel SortGallery(GalerieFullViewModel Gallery, SortType SortedBy);
     }
 }

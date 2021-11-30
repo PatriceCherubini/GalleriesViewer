@@ -1,4 +1,5 @@
-﻿using GalerieViewer.Data;
+﻿using GalerieViewer.Common;
+using GalerieViewer.Data;
 using GalerieViewer.Models;
 using GalerieViewer.Services;
 using GalerieViewer.ViewModels;
@@ -12,8 +13,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace GalerieViewer.Pages
@@ -34,6 +37,8 @@ namespace GalerieViewer.Pages
         public int id { get; set; }
         public string ErrorMessage { get; set; }
         public GalerieFullViewModel Galerie { get; set; }
+        [BindProperty]
+        public SortType SortingList { get; set; } 
         public IndexModel(ILogger<IndexModel> logger, IGalerieService galerieService, IWebHostEnvironment hostEnvironment)
         {
             _logger = logger;
@@ -47,6 +52,16 @@ namespace GalerieViewer.Pages
             id = Galerie == null ? 0 : Galerie.Id;
             return Page();
         }
+
+        public IActionResult OnPostSort()
+        {
+            var sorted = SortingList.ToString();
+            Galerie = _galerieService.GetPaginatedGallery(id, PageSize, PageNB, sorted);
+            Show = Galerie == null ? 0 : Galerie.Id;
+            id = Galerie == null ? 0 : Galerie.Id;
+            return Page();
+        }
+
 
         public PartialViewResult OnGetViewImageModalPartial(int idImage)
         {
@@ -67,7 +82,7 @@ namespace GalerieViewer.Pages
         }
         public PartialViewResult OnGetGalleryModalPartialEdit(int idGallery, int openedGallery)
         {
-            return Partial("_GalleryModalPartial", new EditGalleryViewModel { Gallery = _galerieService.GenerateGalerie(idGallery), OpenedGallery = openedGallery });
+            return Partial("_GalleryModalPartial", new EditGalleryViewModel { Gallery = _galerieService.GetGallery(idGallery), OpenedGallery = openedGallery });
         }
         public PartialViewResult OnGetImageModalPartial(int idGallery)
         {

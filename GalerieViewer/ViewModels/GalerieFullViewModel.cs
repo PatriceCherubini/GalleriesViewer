@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
+using System.ComponentModel.DataAnnotations;
+using GalerieViewer.Common;
 
 namespace GalerieViewer.ViewModels
 {
@@ -11,5 +14,7 @@ namespace GalerieViewer.ViewModels
     {
         public List<ImageViewModel> ListeImages { get; set; }
         public IFormFile ImageFile { get; set; }
+        [EnumDataType(typeof(SortType))]
+        public SortType SortedBy { get; set; }
     }
 }

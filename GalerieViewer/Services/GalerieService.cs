@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Linq.Dynamic.Core;
+using GalerieViewer.Common;
 
 namespace GalerieViewer.Services
 {
@@ -26,7 +28,7 @@ namespace GalerieViewer.Services
         /// </summary>
         /// <param name="id">id of the gallery</param>
         /// <returns>Either the specific gallery, or if there are no gallery</returns>
-        public GalerieFullViewModel GenerateGalerie(int id)
+        public GalerieFullViewModel GetGallery(int id)
         {
             try
             {
@@ -132,7 +134,7 @@ namespace GalerieViewer.Services
         /// <returns>a unique filename</returns>
         public string UploadImage(string root, string folder, ImageViewModel image)
         {
-            string uniqueFileName = _pictureUploader.SetFileName(image.ImageFile, image.Nom);
+            string uniqueFileName = _pictureUploader.SetFileName(image.ImageFile, image.Name);
             _pictureUploader.SetPath(root, folder);
             _pictureUploader.Upload();
 
@@ -143,13 +145,47 @@ namespace GalerieViewer.Services
         {
             try
             {
-                var gallery = _dataAccess.GetPaginatedGallery(idGallery, pageSize, pageNB);
+                var gallery = _dataAccess.GetGalerie(idGallery);
+                gallery = SortGallery(gallery, gallery.SortedBy);
+                gallery.ListeImages = gallery.ListeImages
+                                     .Skip((pageNB - 1) * pageSize)
+                                     .Take(pageSize).ToList();
                 return gallery;
             }
             catch (Exception)
             {
                 return null;
             }
+        }
+        public GalerieFullViewModel GetPaginatedGallery(int idGallery, int pageSize, int pageNB, string sortedBy)
+        {
+            try
+            {
+                SortType sort = (SortType)Enum.Parse(typeof(SortType), sortedBy, true);
+                var gallery = _dataAccess.UpdateSort(idGallery, sort);
+                gallery = SortGallery(gallery, sort);
+                gallery.ListeImages = gallery.ListeImages
+                                     .Skip((pageNB - 1) * pageSize)
+                                     .Take(pageSize).ToList();
+                return gallery;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+        public GalerieFullViewModel SortGallery(GalerieFullViewModel Gallery, SortType sortedBy)
+        {
+            try
+            {
+                Gallery.ListeImages = Gallery.ListeImages.AsQueryable().OrderBy(sortedBy.ToString()).ToList();
+                return Gallery;
+            }
+            catch (Exception)
+            {
+                return Gallery;
+            }
+
         }
     }
 }

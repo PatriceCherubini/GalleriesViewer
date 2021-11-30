@@ -1,4 +1,5 @@
-﻿using GalerieViewer.Models;
+﻿using GalerieViewer.Common;
+using GalerieViewer.Models;
 using GalerieViewer.ViewModels;
 using System.Collections.Generic;
 
@@ -10,7 +11,8 @@ namespace GalerieViewer.Services
         GalerieFullViewModel GetGalerie(int id);
         GalerieFullViewModel GetPaginatedGallery(int idGallery, int pageSize, int PageNB);
         void UpdateDateGalery(int id);
-        List<ImageViewModel> GetAllImagesItem(int id);
+        GalerieFullViewModel UpdateSort(int id, SortType sortedBy);
+       List<ImageViewModel> GetAllImagesItem(int id);
         ImageViewModel GetImage(int id);
         CarouselViewModel GetCarousel(int idGallery, int idImage);
         int[] GetListIdsImages(int idGallery);

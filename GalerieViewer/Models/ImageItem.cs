@@ -15,7 +15,7 @@ namespace GalerieViewer.Models
         public bool IsDeleted { get; set; } = false;
         [Required]
         [Column(TypeName = "nvarchar(20)")]
-        public string Nom { get; set; }
+        public string Name { get; set; }
         [Required]
         [MaxLength(200)]
         public string Description { get; set; }

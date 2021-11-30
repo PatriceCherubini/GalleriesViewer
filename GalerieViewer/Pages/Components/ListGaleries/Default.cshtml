@@ -2,10 +2,15 @@
 <div id="list-galleries-header">
     <h2 class="m-2">Galleries</h2>
     <div>
-        <button type="button" class="btn btn-big btn-primary" data-toggle="ajax-modal" data-url="@Url.Page("Index", "GalleryModalPartial", new { openedGallery = Model.Show })">Add Gallery</button>
+        <button type="button" class="btn btn-big btn-primary btn-add" data-toggle="ajax-modal" data-url="@Url.Page("Index", "GalleryModalPartial", new { openedGallery = Model.Show })">
+            <svg class="icon-plus" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 1 h2 v3 h3 v2 h-3 v3 h-2 v-3 h-3 v-2 h3 v-3 z" />
+            </svg>
+            <div>Add</div>
+        </button>
     </div>
 </div>
-<div class="accordion" id="accordionMenu">
+<div class="accordion pb-2" id="accordionMenu">
     @if (Model.ListeGaleries.Count() == 0)
     {
         <div>You have no galleries to show</div>
