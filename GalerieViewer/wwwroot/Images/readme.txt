@@ -1,1 +1,1 @@
-Pictures will be upload in this folder
+Pictures will be uploaded in this folder
