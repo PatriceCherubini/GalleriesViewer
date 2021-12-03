@@ -1,6 +1,4 @@
-﻿using GalerieViewer.Data;
-using GalerieViewer.Models;
-using GalerieViewer.ViewModels;
+﻿using GalerieViewer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;

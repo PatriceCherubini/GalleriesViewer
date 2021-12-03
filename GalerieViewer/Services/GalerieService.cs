@@ -1,9 +1,5 @@
-﻿using GalerieViewer.Data;
-using GalerieViewer.Models;
-using GalerieViewer.ViewModels;
-using Microsoft.EntityFrameworkCore;
+﻿using GalerieViewer.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
@@ -66,7 +62,6 @@ namespace GalerieViewer.Services
             {
                 return Gallery;
             }
-
         }
         /// <summary>
         /// Get a picture to show in a modal. 
@@ -82,7 +77,6 @@ namespace GalerieViewer.Services
                                       .Select(i => i.ImageItemId)
                                       .ToArray();
             carousel.Position = Array.IndexOf(arrayIds, idImage);
-
             return carousel;
         }
         /// <summary>
@@ -162,10 +156,8 @@ namespace GalerieViewer.Services
             _pictureUploader.SetFileName(image.ImageFile, image.Name);
             _pictureUploader.SetPath(root, folder);
             _pictureUploader.Upload(400);
-
             image.FileName = _pictureUploader.UniqueFileName;
             image.FileNameThumb = _pictureUploader.UniqueFileNameThumb;
-
             return image;
         }
 
