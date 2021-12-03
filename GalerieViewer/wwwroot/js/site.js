@@ -85,6 +85,10 @@ $(function () {
     });
 });
 
+
+// Script for Carousel
+//---------------------------------------------------------------------
+
 //Create modal from partialview and open it at a specific slide
 $(function () {
     var viewImagePlaceholderElement = $('#viewimage-modal-placeholder');
@@ -100,36 +104,6 @@ $(function () {
     });
 });
 
- /* Open Image in Modal
- --------------------------------------------------------------------
-var imgToShow = $('#viewimage-modal-placeholder');
-imgToShow.on('click', '[data-toggle="ajax-modal-navigateImage"]', function (event) {
-
-   
-    var actionUrl = $(this).data('url');
-    $.ajax({
-        url: actionUrl,
-        method: 'get',
-        processData: false,
-        contentType: false
-        //function that is trigger 
-    }).done(function (data) {
-
-        var newImage = data.find("#date-creation");
-        var newBody = $('.modal-body', data);
-        var newImage = newBody.find(".card-img");
-        imgToShow.find('.card-img').replaceWith(newImage);
-        viewImagePlaceholderElement.find('#date-creation').replaceWith(newImage);
-        viewImagePlaceholderElement.find('.modal-body').replaceWith(newBody);
-         viewImagePlaceholderElement.find('.modal').modal('show');
-    });
-
-});
---------------------------------------------------------------------
-*/
-
-// Script for Carousel
-//---------------------------------------------------------------------
 
 // Open the Modal
 function openModal() {

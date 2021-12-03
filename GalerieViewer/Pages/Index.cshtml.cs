@@ -38,7 +38,7 @@ namespace GalerieViewer.Pages
         public string ErrorMessage { get; set; }
         public GalerieFullViewModel Galerie { get; set; }
         [BindProperty]
-        public SortType SortingList { get; set; } 
+        public SortType SortingList { get; set; }
         public IndexModel(ILogger<IndexModel> logger, IGalerieService galerieService, IWebHostEnvironment hostEnvironment)
         {
             _logger = logger;
@@ -46,32 +46,22 @@ namespace GalerieViewer.Pages
             _hostEnvironment = hostEnvironment;
         }
         public IActionResult OnGet()
-        {  
+        {
             Galerie = _galerieService.GetPaginatedGallery(id, PageSize, PageNB);
             Show = Galerie == null ? 0 : Galerie.Id;
             id = Galerie == null ? 0 : Galerie.Id;
+            SortingList = Galerie == null ? SortType.DateUpload : Galerie.SortedBy;
             return Page();
         }
 
         public IActionResult OnPostSort()
         {
-            var sorted = SortingList.ToString();
-            Galerie = _galerieService.GetPaginatedGallery(id, PageSize, PageNB, sorted);
+            Galerie = _galerieService.GetPaginatedGallery(id, PageSize, PageNB, SortingList);
             Show = Galerie == null ? 0 : Galerie.Id;
             id = Galerie == null ? 0 : Galerie.Id;
             return Page();
         }
 
-
-        public PartialViewResult OnGetViewImageModalPartial(int idImage)
-        {
-            return new PartialViewResult
-            {
-                ViewName = "_ViewImageCarousel",
-                ViewData = new ViewDataDictionary<ViewImageViewModel>(ViewData, _galerieService.ViewImage(idImage, id))
-            };
-           // return Partial("_ViewImageCarousel", _galerieService.ViewImage(idImage, id));
-        }
         public PartialViewResult OnGetViewCarouselPartial(int idImage)
         {
             return Partial("_ViewImageModalPartial", _galerieService.ViewCarousel(idImage, id));
@@ -82,7 +72,7 @@ namespace GalerieViewer.Pages
         }
         public PartialViewResult OnGetGalleryModalPartialEdit(int idGallery, int openedGallery)
         {
-            return Partial("_GalleryModalPartial", new EditGalleryViewModel { Gallery = _galerieService.GetGallery(idGallery), OpenedGallery = openedGallery });
+            return Partial("_GalleryModalPartial", new EditGalleryViewModel { Gallery = _galerieService.GetPaginatedGallery(idGallery, PageSize, PageNB), OpenedGallery = openedGallery });
         }
         public PartialViewResult OnGetImageModalPartial(int idGallery)
         {
@@ -90,12 +80,12 @@ namespace GalerieViewer.Pages
         }
         public PartialViewResult OnGetImageModalPartialEdit(int idImage)
         {
-            return Partial("_ImageModalPartial", _galerieService.GetImage(idImage));
+            return Partial("_ImageEditModalPartial", _galerieService.GetImage(idImage));
         }
         public IActionResult OnPostDeleteImg(int idImage, int idGallery)
         {
             _galerieService.DeleteImage(idImage, idGallery);
-            return RedirectToPage("Index", new { id = idGallery, PageNB = 1});
+            return RedirectToPage("Index", new { id = idGallery, PageNB = 1 });
         }
         public IActionResult OnPostDeleteGallery(int idGallery)
         {
@@ -129,21 +119,29 @@ namespace GalerieViewer.Pages
 
             if (ModelState.IsValid)
             {
-                model.FileName = _galerieService.UploadImage(_hostEnvironment.WebRootPath, "Images", model);
-
-                if (model.ImageItemId == 0)
-                {
-                    _galerieService.AddImageInGalerie(model);
-                }
-                else
-                {
-                    _galerieService.UpdateImage(model);
-                }
+                model = _galerieService.UploadImage(_hostEnvironment.WebRootPath, "Images", model);
+                _galerieService.AddImageInGalerie(model);
             }
             return new PartialViewResult
             {
                 ViewName = "_ImageModalPartial",
                 ViewData = new ViewDataDictionary<ImageViewModel>(ViewData, model)
+            };
+        }
+
+        public PartialViewResult OnPostEditImage(ImageWithoutFileViewModel model)
+        {
+            Galerie = _galerieService.GetPaginatedGallery(model.GalerieId, PageSize, PageNB);
+            Show = model.GalerieId;
+
+            if (ModelState.IsValid)
+            {
+                _galerieService.UpdateImage(model);
+            }
+            return new PartialViewResult
+            {
+                ViewName = "_ImageEditModalPartial",
+                ViewData = new ViewDataDictionary<ImageWithoutFileViewModel>(ViewData, model)
             };
         }
     }

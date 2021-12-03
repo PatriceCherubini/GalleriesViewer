@@ -4,12 +4,13 @@ namespace GalerieViewer.Services
 {
     public interface IPictureUploader
     {
-        IFormFile Image { get; }
+        IFormFile ImageFile { get; }
         string ImagePath { get; }
         string UniqueFileName { get; }
-        string SetFileName(IFormFile ImageFile, string name);
+        string UniqueFileNameThumb { get; }
+        void SetFileName(IFormFile ImageFile, string name);
         void SetPath(string root);
         void SetPath(string root, string folder);
-        void Upload();
+        void Upload(int sizeThumb);
     }
 }

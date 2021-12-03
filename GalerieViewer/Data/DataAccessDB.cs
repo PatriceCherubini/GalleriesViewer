@@ -46,35 +46,11 @@ namespace GalerieViewer.Data
         /// </summary>
         /// <param name="id">The id of the gallery</param>
         /// <returns>A gallery (GalerieFullViewModel) with all pictures (if any) in it</returns>
-        public GalerieFullViewModel GetGalerie(int id)
+        public GalerieFullViewModel GetGalerie(int id, int pageSize)
         {
 
             var galerie = _context.Galeries.Where(g => g.GalerieId == id && g.IsDeleted == false)
-                                           .FirstOrDefault();
-            if (galerie == null)
-            {
-                galerie = GetFirstGalerie();
-                if (galerie == null)
-                {
-                    throw new Exception("No gallery found");
-                }
-            }
-
-            return new GalerieFullViewModel()
-            {
-                Id = galerie.GalerieId,
-                Name = galerie.Nom,
-                DateCreation = galerie.DateCreation,
-                DateUpdate = galerie.DateUpdate,
-                Description = galerie.Description,
-                SortedBy = galerie.SortedBy,
-                ListeImages = GetAllImagesItem(galerie.GalerieId)
-            };
-
-        }
-        public GalerieFullViewModel GetPaginatedGallery(int idGallery, int pageSize, int PageNB)
-        {
-            var galerie = _context.Galeries.Where(g => g.GalerieId == idGallery && g.IsDeleted == false)
+                                           .Include("ImageItems")
                                            .FirstOrDefault();
             if (galerie == null)
             {
@@ -94,11 +70,12 @@ namespace GalerieViewer.Data
                 DateCreation = galerie.DateCreation,
                 DateUpdate = galerie.DateUpdate,
                 Description = galerie.Description,
-                nbImageItems = nbImages,
                 SortedBy = galerie.SortedBy,
+                nbImageItems = nbImages,
                 TotalPages = (int)Math.Ceiling(decimal.Divide(nbImages, pageSize)),
-                ListeImages = GetPaginatedImagesItem(galerie.GalerieId, pageSize, PageNB)
+                ListeImages = GetAllImagesItem(galerie.GalerieId)
             };
+
         }
         /// <summary>
         /// Method that return the gallery with the smallest id in the context
@@ -113,11 +90,12 @@ namespace GalerieViewer.Data
         }
         public CarouselViewModel GetCarousel(int idGallery, int idImage)
         {
-            var listgalleries = GetAllImagesItem(idGallery);
-            int[] arrayIds = GetListIdsImages(idGallery);
-            int positionImageinGallery = Array.IndexOf(arrayIds, idImage);
+            SortType sortedBy = _context.Galeries.Where(g => g.GalerieId == idGallery && g.IsDeleted == false)
+                                                 .Select(s => s.SortedBy)
+                                                 .FirstOrDefault();
 
-            return new CarouselViewModel { ListPictures = listgalleries, Position = positionImageinGallery };
+            var listgalleries = GetAllImagesItem(idGallery);
+            return new CarouselViewModel { ListPictures = listgalleries, SortedBy = sortedBy };
         }
 
         /// <summary>
@@ -140,30 +118,10 @@ namespace GalerieViewer.Data
                                         DateCreation = i.DateCreation,
                                         DateUpload = i.DateUpload,
                                         Description = i.Description,
-                                        FileName = i.FileName
+                                        FileName = i.FileName,
+                                        FileNameThumb = i.FileNameThumb
                                     })
                                     .ToList();
-        }
-        public List<ImageViewModel> GetPaginatedImagesItem(int id, int pageSize, int pageNB)
-        {
-            return _context.Galeries.Where(a => a.GalerieId == id)
-                                    .Include("ImageItems")
-                                    .FirstOrDefault()
-                                    .ImageItems
-                                    .Where(i => !i.IsDeleted)
-                                    .OrderBy(i => i.ImageItemId)
-                                    .Skip((pageNB - 1) * pageSize)
-                                    .Take(pageSize)
-                                    .Select(i => new ImageViewModel()
-                                    {
-                                        ImageItemId = i.ImageItemId,
-                                        GalerieId = i.GalerieId,
-                                        Name = i.Name,
-                                        DateCreation = i.DateCreation,
-                                        DateUpload = i.DateUpload,
-                                        Description = i.Description,
-                                        FileName = i.FileName
-                                    }).ToList();
         }
         /// <summary>
         /// Get a picture a return it in ImageViewModel format
@@ -181,15 +139,10 @@ namespace GalerieViewer.Data
                                           DateCreation = i.DateCreation,
                                           DateUpload = i.DateUpload,
                                           Description = i.Description,
-                                          FileName = i.FileName
+                                          FileName = i.FileName,
+                                          FileNameThumb = i.FileNameThumb
                                       })
                                       .FirstOrDefault();
-        }
-        public int[] GetListIdsImages(int idGallery)
-        {
-            return _context.ImageItems.Where(i => i.IsDeleted == false && i.GalerieId == idGallery)
-                                      .Select(i => i.ImageItemId)
-                                      .ToArray();
         }
         /// <summary>
         /// Add a new gallery in the context
@@ -255,14 +208,14 @@ namespace GalerieViewer.Data
             _context.SaveChanges();
         }
 
-        public GalerieFullViewModel UpdateSort(int id, SortType sortedBy)
+        public GalerieFullViewModel UpdateSort(int id, int pageSize, SortType sortedBy)
         {
             var updatedGallery = _context.Galeries.Where(i => i.GalerieId == id).FirstOrDefault();
             updatedGallery.SortedBy = sortedBy;
 
             _context.SaveChanges();
 
-            return GetGalerie(id);
+            return GetGalerie(id, pageSize);
         }
 
         /// <summary>
@@ -283,7 +236,8 @@ namespace GalerieViewer.Data
                 Description = img.Description,
                 DateCreation = img.DateCreation,
                 DateUpload = DateTime.Now,
-                FileName = img.FileName
+                FileName = img.FileName,
+                FileNameThumb = img.FileNameThumb
             });
 
             _context.SaveChanges();
@@ -317,13 +271,12 @@ namespace GalerieViewer.Data
         /// Update a picture
         /// </summary>
         /// <param name="img">The picture to update in ImageViewModel format</param>
-        public void UpdateImage(ImageViewModel img)
+        public void UpdateImage(ImageWithoutFileViewModel img)
         {
             var updatedImg = _context.ImageItems.Where(i => i.ImageItemId == img.ImageItemId).FirstOrDefault();
             updatedImg.DateCreation = img.DateCreation;
             updatedImg.Description = img.Description;
             updatedImg.Name = img.Name;
-            updatedImg.FileName = img.FileName;
             updatedImg.DateUpload = DateTime.Now;
 
             _context.SaveChanges();

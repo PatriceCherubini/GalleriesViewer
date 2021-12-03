@@ -24,5 +24,6 @@ namespace GalerieViewer.Models
         [Required]
         public DateTime DateUpload { get; set; }
         public string FileName { get; set; }
+        public string FileNameThumb { get; set; }
     }
 }
