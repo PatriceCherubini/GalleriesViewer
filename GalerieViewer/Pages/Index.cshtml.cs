@@ -29,7 +29,7 @@ namespace GalerieViewer.Pages
         private readonly ILogger<IndexModel> _logger;
         private IGalerieService _galerieService;
         [BindProperty]
-        public int PageSize { get; set; } = 5;
+        public int PageSize { get; set; } = 20;
         [BindProperty(SupportsGet = true)]
         public int PageNB { get; set; } = 1;
         public int? Show { get; private set; }
