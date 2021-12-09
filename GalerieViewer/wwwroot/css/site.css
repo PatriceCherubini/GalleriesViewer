@@ -206,6 +206,11 @@ h6, .h6 {
 hr {
     border-top: 2px solid rgba(0,0,0,.5);
 }
+
+.text-danger {
+    font-weight: 400;
+}
+
 /*Navbar*/
 /*----------------------------------------------------------------------------------*/
 
@@ -251,8 +256,10 @@ a.navbar-brand {
 }
 
 #container-gallery {
-    padding-left: 0.6rem;
-    padding-right: 0.6rem;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+    padding-top: 1.6rem;
+    padding-bottom: 0.6rem;
 }
 
 #list-galleries, #container-gallery {

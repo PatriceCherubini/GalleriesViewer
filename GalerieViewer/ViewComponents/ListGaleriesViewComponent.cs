@@ -17,10 +17,10 @@ namespace GalerieViewer.ViewComponents
         {
             _listGalerieService = listGalerieService;
         }
-        public IViewComponentResult Invoke(int show)
+        public async Task<IViewComponentResult> InvokeAsync(int show)
         {
             var vm = new ListGaleriesViewModel();
-            vm.ListeGaleries = _listGalerieService.GenerateListGaleries();
+            vm.ListeGaleries = await _listGalerieService.GenerateListGaleries();
             vm.Show = show ;
 
             return View(vm);

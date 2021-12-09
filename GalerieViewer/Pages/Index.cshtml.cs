@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -28,8 +29,9 @@ namespace GalerieViewer.Pages
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly ILogger<IndexModel> _logger;
         private IGalerieService _galerieService;
+        private IConfiguration _configuration;
         [BindProperty]
-        public int PageSize { get; set; } = 5;
+        public int PageSize { get; set; }
         [BindProperty(SupportsGet = true)]
         public int PageNB { get; set; } = 1;
         public int? Show { get; private set; }
@@ -39,48 +41,52 @@ namespace GalerieViewer.Pages
         public GalerieFullViewModel Galerie { get; set; }
         [BindProperty]
         public SortType SortingList { get; set; }
-        public IndexModel(ILogger<IndexModel> logger, IGalerieService galerieService, IWebHostEnvironment hostEnvironment)
+        public IndexModel(ILogger<IndexModel> logger, IGalerieService galerieService, IWebHostEnvironment hostEnvironment, IConfiguration configuration)
         {
             _logger = logger;
             _galerieService = galerieService;
             _hostEnvironment = hostEnvironment;
+            _configuration = configuration;
+            PageSize = _configuration.GetValue("PageSize", 10);
         }
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
-            Galerie = _galerieService.GetPaginatedGallery(id, PageSize, PageNB);
+            Galerie = await _galerieService.GetPaginatedGallery(id, PageSize, PageNB);
             Show = Galerie == null ? 0 : Galerie.Id;
             id = Galerie == null ? 0 : Galerie.Id;
             SortingList = Galerie == null ? SortType.DateUpload : Galerie.SortedBy;
             return Page();
         }
 
-        public IActionResult OnPostSort()
+        public async Task<IActionResult> OnPostSort()
         {
-            Galerie = _galerieService.GetPaginatedGallery(id, PageSize, PageNB, SortingList);
+            Galerie = await _galerieService.GetPaginatedGallery(id, PageSize, PageNB, SortingList);
             Show = Galerie == null ? 0 : Galerie.Id;
             id = Galerie == null ? 0 : Galerie.Id;
             return Page();
         }
 
-        public PartialViewResult OnGetViewCarouselPartial(int idImage)
+        public async Task<PartialViewResult> OnGetViewCarouselPartial(int idImage)
         {
-            return Partial("_ViewImageModalPartial", _galerieService.ViewCarousel(idImage, id));
+            var carousel = await _galerieService.ViewCarousel(idImage, id);
+            return Partial("_ViewImageModalPartial", carousel);
         }
         public PartialViewResult OnGetGalleryModalPartial(int openedGallery)
         {
             return Partial("_GalleryModalPartial", new EditGalleryViewModel { Gallery = new GalerieViewModel(), OpenedGallery = openedGallery });
         }
-        public PartialViewResult OnGetGalleryModalPartialEdit(int idGallery, int openedGallery)
+        public async Task<PartialViewResult> OnGetGalleryModalPartialEdit(int idGallery, int openedGallery)
         {
-            return Partial("_GalleryModalPartial", new EditGalleryViewModel { Gallery = _galerieService.GetPaginatedGallery(idGallery, PageSize, PageNB), OpenedGallery = openedGallery });
+
+            return Partial("_GalleryModalPartial", new EditGalleryViewModel { Gallery = await _galerieService.GetPaginatedGallery(idGallery, PageSize, PageNB), OpenedGallery = openedGallery });
         }
         public PartialViewResult OnGetImageModalPartial(int idGallery)
         {
             return Partial("_ImageModalPartial", new ImageViewModel { GalerieId = idGallery });
         }
-        public PartialViewResult OnGetImageModalPartialEdit(int idImage)
+        public async Task<PartialViewResult> OnGetImageModalPartialEdit(int idImage)
         {
-            return Partial("_ImageEditModalPartial", _galerieService.GetImage(idImage));
+            return Partial("_ImageEditModalPartial", await _galerieService.GetImage(idImage));
         }
         public IActionResult OnPostDeleteImg(int idImage, int idGallery)
         {
@@ -92,9 +98,9 @@ namespace GalerieViewer.Pages
             _galerieService.DeleteGallery(idGallery);
             return RedirectToPage("Index", new { id = 0 });
         }
-        public IActionResult OnPostAddGallery(EditGalleryViewModel model)
+        public async Task<IActionResult> OnPostAddGallery(EditGalleryViewModel model)
         {
-            Galerie = _galerieService.GetPaginatedGallery(model.OpenedGallery, PageSize, PageNB);
+            Galerie = await _galerieService.GetPaginatedGallery(model.OpenedGallery, PageSize, PageNB);
             Show = model.OpenedGallery;
             int toOpenGallery = 0;
 
@@ -112,9 +118,9 @@ namespace GalerieViewer.Pages
             }
             return Partial("_GalleryModalPartial", model);
         }
-        public PartialViewResult OnPostAddImage(ImageViewModel model)
+        public async Task<PartialViewResult> OnPostAddImage(ImageViewModel model)
         {
-            Galerie = _galerieService.GetPaginatedGallery(model.GalerieId, PageSize, PageNB);
+            Galerie = await _galerieService.GetPaginatedGallery(model.GalerieId, PageSize, PageNB);
             Show = model.GalerieId;
 
             if (ModelState.IsValid)
@@ -129,9 +135,9 @@ namespace GalerieViewer.Pages
             };
         }
 
-        public PartialViewResult OnPostEditImage(ImageWithoutFileViewModel model)
+        public async Task<PartialViewResult> OnPostEditImage(ImageWithoutFileViewModel model)
         {
-            Galerie = _galerieService.GetPaginatedGallery(model.GalerieId, PageSize, PageNB);
+            Galerie = await _galerieService.GetPaginatedGallery(model.GalerieId, PageSize, PageNB);
             Show = model.GalerieId;
 
             if (ModelState.IsValid)

@@ -25,9 +25,9 @@ namespace GalerieViewer.Data
         /// Get a list of all galleriers
         /// </summary>
         /// <returns>A List containing all galleries in GalerieViewModel format</returns>
-        public List<GalerieViewModel> GetAllGaleries()
+        public async Task<List<GalerieViewModel>> GetAllGaleries()
         {
-            return _context.Galeries.Where(x => x.IsDeleted == false)
+            return await _context.Galeries.Where(x => x.IsDeleted == false)
                                     .Include("ImageItems")
                                     .Select(g => new GalerieViewModel()
                                     {
@@ -39,22 +39,22 @@ namespace GalerieViewer.Data
                                         nbImageItems = g.ImageItems.Where(i => i.IsDeleted == false).Count(),
                                         TotalPages = 0
                                     })
-                                   .ToList();
+                                   .ToListAsync();
         }
         /// <summary>
         /// Look for a specific gallery. If not found, get the first gallery (smallest if). If still no gallery is found, throw an exception
         /// </summary>
         /// <param name="id">The id of the gallery</param>
         /// <returns>A gallery (GalerieFullViewModel) with all pictures (if any) in it</returns>
-        public GalerieFullViewModel GetGalerie(int id, int pageSize)
+        public async Task<GalerieFullViewModel> GetGalerie(int id, int pageSize)
         {
 
-            var galerie = _context.Galeries.Where(g => g.GalerieId == id && g.IsDeleted == false)
+            var galerie = await _context.Galeries.Where(g => g.GalerieId == id && g.IsDeleted == false)
                                            .Include("ImageItems")
-                                           .FirstOrDefault();
+                                           .FirstOrDefaultAsync();
             if (galerie == null)
             {
-                galerie = GetFirstGalerie();
+                galerie = await GetFirstGalerie();
                 if (galerie == null)
                 {
                     throw new Exception("No gallery found");
@@ -73,7 +73,7 @@ namespace GalerieViewer.Data
                 SortedBy = galerie.SortedBy,
                 nbImageItems = nbImages,
                 TotalPages = (int)Math.Ceiling(decimal.Divide(nbImages, pageSize)),
-                ListeImages = GetAllImagesItem(galerie.GalerieId)
+                ListeImages = await GetAllImagesItem(galerie.GalerieId)
             };
 
         }
@@ -81,20 +81,20 @@ namespace GalerieViewer.Data
         /// Method that return the gallery with the smallest id in the context
         /// </summary>
         /// <returns>The gallery (GalerieFullViewModel) with the smallest id</returns>
-        private Galerie GetFirstGalerie()
+        private async Task<Galerie> GetFirstGalerie()
         {
-            return _context.Galeries.Where(x => x.IsDeleted == false)
+            return await _context.Galeries.Where(x => x.IsDeleted == false)
                                     .OrderBy(g => g.GalerieId)
                                     .Include("ImageItems")
-                                    .FirstOrDefault();
+                                    .FirstOrDefaultAsync();
         }
-        public CarouselViewModel GetCarousel(int idGallery, int idImage)
+        public async Task<CarouselViewModel> GetCarousel(int idGallery, int idImage)
         {
             SortType sortedBy = _context.Galeries.Where(g => g.GalerieId == idGallery && g.IsDeleted == false)
                                                  .Select(s => s.SortedBy)
                                                  .FirstOrDefault();
 
-            var listgalleries = GetAllImagesItem(idGallery);
+            var listgalleries = await GetAllImagesItem(idGallery);
             return new CarouselViewModel { ListPictures = listgalleries, SortedBy = sortedBy };
         }
 
@@ -103,34 +103,32 @@ namespace GalerieViewer.Data
         /// </summary>
         /// <param name="id">id the gallery</param>
         /// <returns>A list of all the picture from a gallery, in ImageViewModel format</returns>
-        public List<ImageViewModel> GetAllImagesItem(int id)
-        {
-            return _context.Galeries.Where(a => a.GalerieId == id)
-                                    .Include("ImageItems")
-                                    .FirstOrDefault()
-                                    .ImageItems
-                                    .Where(i => !i.IsDeleted)
-                                    .Select(i => new ImageViewModel()
-                                    {
-                                        ImageItemId = i.ImageItemId,
-                                        GalerieId = i.GalerieId,
-                                        Name = i.Name,
-                                        DateCreation = i.DateCreation,
-                                        DateUpload = i.DateUpload,
-                                        Description = i.Description,
-                                        FileName = i.FileName,
-                                        FileNameThumb = i.FileNameThumb
-                                    })
-                                    .ToList();
+        public async Task<List<ImageViewModel>> GetAllImagesItem(int id)
+        {           
+                return await _context.ImageItems.Where(a => a.GalerieId == id)
+                                                .Where(i => !i.IsDeleted)
+                                                .Select(i => new ImageViewModel()
+                                                {
+                                                    ImageItemId = i.ImageItemId,
+                                                    GalerieId = i.GalerieId,
+                                                    Name = i.Name,
+                                                    DateCreation = i.DateCreation,
+                                                    DateUpload = i.DateUpload,
+                                                    Description = i.Description,
+                                                    FileName = i.FileName,
+                                                    FileNameThumb = i.FileNameThumb
+                                                })
+                                                .ToListAsync();
+                                  
         }
         /// <summary>
         /// Get a picture a return it in ImageViewModel format
         /// </summary>
         /// <param name="id">id of the picture</param>
         /// <returns>A picture in ImageViewModel format</returns>
-        public ImageViewModel GetImage(int id)
+        public async Task<ImageViewModel> GetImage(int id)
         {
-            return _context.ImageItems.Where(i => i.ImageItemId == id)
+            return await _context.ImageItems.Where(i => i.ImageItemId == id)
                                       .Select(i => new ImageViewModel()
                                       {
                                           ImageItemId = i.ImageItemId,
@@ -142,7 +140,7 @@ namespace GalerieViewer.Data
                                           FileName = i.FileName,
                                           FileNameThumb = i.FileNameThumb
                                       })
-                                      .FirstOrDefault();
+                                      .FirstOrDefaultAsync();
         }
         /// <summary>
         /// Add a new gallery in the context
@@ -208,14 +206,14 @@ namespace GalerieViewer.Data
             _context.SaveChanges();
         }
 
-        public GalerieFullViewModel UpdateSort(int id, int pageSize, SortType sortedBy)
+        public async Task<GalerieFullViewModel> UpdateSort(int id, int pageSize, SortType sortedBy)
         {
             var updatedGallery = _context.Galeries.Where(i => i.GalerieId == id).FirstOrDefault();
             updatedGallery.SortedBy = sortedBy;
 
             _context.SaveChanges();
 
-            return GetGalerie(id, pageSize);
+            return await GetGalerie(id, pageSize);
         }
 
         /// <summary>

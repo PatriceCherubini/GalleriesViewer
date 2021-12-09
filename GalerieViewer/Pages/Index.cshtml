@@ -17,8 +17,8 @@
                 @await Component.InvokeAsync("ListGaleries", new { show = Model.Show })
             </div>
         </div>
-        <div class="col m-2" id="container-gallery">
-            <div class="container">
+        <div class="col m-2" >
+            <div id="container-gallery">
                 @if (Model.Galerie == null)
                 {
                     @await Html.PartialAsync("~/Pages/_NoGallery.cshtml")

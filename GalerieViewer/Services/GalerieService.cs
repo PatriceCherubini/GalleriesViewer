@@ -19,11 +19,11 @@ namespace GalerieViewer.Services
             _dataAccess = dataAccess;
             _pictureUploader = pictureUploader;
         }
-        public GalerieFullViewModel GetPaginatedGallery(int idGallery, int pageSize, int pageNB)
+        public async Task<GalerieFullViewModel> GetPaginatedGallery(int idGallery, int pageSize, int pageNB)
         {
             try
             {
-                var gallery = _dataAccess.GetGalerie(idGallery, pageSize);
+                var gallery = await _dataAccess.GetGalerie(idGallery, pageSize);
                 gallery = SortGallery(gallery, gallery.SortedBy);
                 gallery.ListeImages = gallery.ListeImages
                                      .Skip((pageNB - 1) * pageSize)
@@ -35,11 +35,11 @@ namespace GalerieViewer.Services
                 return null;
             }
         }
-        public GalerieFullViewModel GetPaginatedGallery(int idGallery, int pageSize, int pageNB, SortType sortedBy)
+        public async Task<GalerieFullViewModel> GetPaginatedGallery(int idGallery, int pageSize, int pageNB, SortType sortedBy)
         {
             try
             {
-                var gallery = _dataAccess.UpdateSort(idGallery, pageSize, sortedBy);
+                var gallery = await _dataAccess.UpdateSort(idGallery, pageSize, sortedBy);
                 gallery = SortGallery(gallery, sortedBy);
                 gallery.ListeImages = gallery.ListeImages
                                      .Skip((pageNB - 1) * pageSize)
@@ -69,9 +69,9 @@ namespace GalerieViewer.Services
         /// <param name="idImage">Id of the picture to show</param>
         /// <param name="idGallery">Id of the gallery that contains the picture</param>
         /// <returns>A ViewImageModel to show in a modal</returns>
-        public CarouselViewModel ViewCarousel(int idImage, int idGallery)
+        public async Task<CarouselViewModel> ViewCarousel(int idImage, int idGallery)
         {
-            CarouselViewModel carousel = _dataAccess.GetCarousel(idGallery, idImage);
+            CarouselViewModel carousel = await _dataAccess.GetCarousel(idGallery, idImage);
             carousel.ListPictures = carousel.ListPictures.AsQueryable().OrderBy(carousel.SortedBy.ToString()).ToList();
             int[] arrayIds = carousel.ListPictures
                                       .Select(i => i.ImageItemId)
@@ -84,9 +84,9 @@ namespace GalerieViewer.Services
         /// </summary>
         /// <param name="id">the id of the picture</param>
         /// <returns></returns>
-        public ImageViewModel GetImage(int id)
+        public async Task<ImageViewModel> GetImage(int id)
         {
-            return _dataAccess.GetImage(id);
+            return await _dataAccess.GetImage(id);
         }
         /// <summary>
         /// Add a new picture
