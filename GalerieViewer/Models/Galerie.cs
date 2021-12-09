@@ -21,9 +21,9 @@ namespace GalerieViewer.Models
         [MaxLength(200)]
         public string Description { get; set; }
         [Required]
-        public DateTime DateCreation { get; set; }
+        public DateTime? DateCreation { get; set; }
         [Required]
-        public DateTime DateUpdate { get; set; } 
+        public DateTime? DateUpdate { get; set; } 
         public List<ImageItem> ImageItems { get; set; }
         public SortType SortedBy { get; set; }
         public string ImageIcon { get; set; }

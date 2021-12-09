@@ -1,0 +1,10 @@
+﻿<div id="empty-gallery">
+    <p><h5>This gallery is empty.</h5></p>
+    <p><h6>To add a picture to this gallery , click the <span>ADD</span> button below.</h6></p>
+    <button type="button" class="btn btn-big btn-primary btn-add" data-toggle="ajax-modal-image" data-url="@Url.Page("Index", "ImageModalPartial", new { idGallery = Model.Galerie.Id })">
+        <svg class="icon-plus" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 1 h2 v3 h3 v2 h-3 v3 h-2 v-3 h-3 v-2 h3 v-3 z" />
+        </svg>
+        <div>Add</div>
+    </button>
+</div>

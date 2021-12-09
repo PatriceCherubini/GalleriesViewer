@@ -22,7 +22,7 @@ namespace GalerieViewer.ViewModels
         [Required(ErrorMessage = "Please specify a date")]
         [DateRange("1/1/1800 0:00:00 AM", ErrorMessage = "Please instert a valide date (between 01/01/1800 and today.")]
         [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
-        public DateTime DateCreation { get; set; }
-        public DateTime DateUpload { get; set; }
+        public DateTime? DateCreation { get; set; }
+        public DateTime? DateUpload { get; set; }
     }
 }

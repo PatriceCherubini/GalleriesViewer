@@ -20,9 +20,9 @@ namespace GalerieViewer.Models
         [MaxLength(200)]
         public string Description { get; set; }
         [Required]
-        public DateTime DateCreation { get; set; }
+        public DateTime? DateCreation { get; set; }
         [Required]
-        public DateTime DateUpload { get; set; }
+        public DateTime? DateUpload { get; set; }
         public string FileName { get; set; }
         public string FileNameThumb { get; set; }
     }

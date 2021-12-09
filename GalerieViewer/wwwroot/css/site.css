@@ -16,15 +16,16 @@ for details on configuring this project to bundle and minify static web assets. 
     --white: #fff;
     --gray: #6c757d;
     --gray-dark: #343a40;
-    --primary: 0, 194, 203;
+    --primary: 0, 151, 167;
+    --primary-light: #00c2cb;
     --secondary: #6c757d;
     --success: #28a745;
     --info: #17a2b8;
     --warning: #ffc107;
     --danger: #dc3545;
-    --light: #f8f9fa;
+    --light: 248, 249, 250;
     --light-grey: #d2d4d6;
-    --dark: #252a2e;
+    --dark: #212529;
     --dark-background: #131517;
     --delete: 212, 61, 34;
     --breakpoint-xs: 0;
@@ -32,31 +33,222 @@ for details on configuring this project to bundle and minify static web assets. 
     --breakpoint-md: 768px;
     --breakpoint-lg: 992px;
     --breakpoint-xl: 1200px;
+    --max-width-xl: 1440px;
     --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --font-neo-sans: neo-sans,sans-serif;
     --font-quicksand: Quicksand, sans-serif;
 }
 
+/*Global elements
+---------------------------------------------------------------------------------
+*/
+
+h1, .h1 {
+    font-size: 2rem;
+}
+
+h2, .h2 {
+    font-size: 1.8rem;
+    color: var(--primary-light);
+}
+
+h3, .h3 {
+    font-size: 1.6rem;
+}
+
+h4, .h4 {
+    font-size: 1.4rem;
+}
+
+h5, .h5 {
+    font-size: 1.2rem;
+}
+
+h6, .h6 {
+    font-size: 1rem;
+}
+
+.btn {
+    box-shadow: none !important;
+    
+}
+
+.btn-add {
+    width: 5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center
+}
+
+.btn-big {
+    border-radius: 3.75rem;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+    font-weight: 600;
+    font-variant: small-caps;
+    transition: 25ms ease;
+    line-height: 1.5;
+    
+}
+
+.btn-primary  {
+    color: rgba(var(--light), 1);
+    background-color: rgba(var(--primary), 1);
+    border-color: rgba(var(--primary), 1);
+}
+
+    .btn-primary:hover, .btn-primary:active {
+        color: rgba(var(--light), 1);
+        background-color: rgba(var(--primary), 0.8) !important;
+        border-color: rgba(var(--primary),0.8) !important;
+        transform: scale(1.05);
+    }
+
+.btn-secondary, btn-secondary:focus, btn-secondary:active:focus, btn-secondary:active {
+    color: rgba(var(--light), 1);
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: 400;
+}
+
+    .btn-secondary:hover, .btn-secondary:active {
+        color: rgba(var(--light), 0.8);
+        border: none;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        transform: scale(1.05);
+    }
+
+
+.btn-icon {
+    height: 2rem;
+    width: 2rem;
+    padding: 0rem;
+}
+
+.btn-icon-sm {
+    height: 1.8rem;
+    width: 1.8rem;
+    padding: 0rem;
+}
+
+.btn-edit {
+    background-color: rgba(var(--primary), 1);
+}
+
+    .btn-edit:hover {
+        background-color: rgba(var(--primary), 0.7);
+        color: black;
+        mix-blend-mode: screen;
+    }
+
+.btn-delete {
+    background-color: rgba(var(--delete), 1);
+}
+
+    .btn-delete:hover {
+        background-color: rgba(var(--delete), 0.7);
+        color: black;
+        mix-blend-mode: screen;
+    }
+
+.btn-link {
+    font-weight: 400;
+    font-size: 1rem;
+    color: rgba(var(--light),1);
+    text-decoration: none;
+    border-radius: 0px;
+}
+
+    .btn-link:hover {
+        color: var(--primary-light);
+        text-decoration: none;
+    }
+
+    .btn-link:focus, .btn-link.focus {
+        text-decoration: none;
+        box-shadow: none;
+    }
+
+.icon-plus {
+    width: 1.2rem;
+}
+
+    .icon-plus > path {
+        fill: rgba(var(--light), 1);
+        stroke: rgba(var(--light), 1);
+        stroke-width: 0.01rem;
+        stroke-linejoin: round;
+    }
+
+.far {
+    font-size: 1.4rem;
+    vertical-align: middle;
+}
+
+.fas {
+    color: black;
+    font-size: 1rem;
+    mix-blend-mode: screen;
+}
+
+.fas-sm {
+    font-size: 0.9rem;
+    color: black;
+    mix-blend-mode: initial;
+}
+
+.fa-edit {
+    font-weight: 500;
+}
+
+hr {
+    border-top: 2px solid rgba(0,0,0,.5);
+}
+/*Navbar*/
+/*----------------------------------------------------------------------------------*/
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
     word-break: break-all;
+    font-size: 1.2rem;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(var(--light), 0.8);
+}
+
+    .navbar-dark .navbar-nav .nav-link:hover, navbar-brand:hover {
+        color: var(--primary-light);
+    }
+
+.navbar {
     font-size: 1rem;
 }
 
-.navbar {
-    font-size: 0.9rem;
+    .navbar .container {
+        max-width: 1350px;
+    }
+
+.navbar-collapse {
+    font-weight: 400;
 }
+
+.nav-link {
+    color: rgba(255,255,255,.7);
+}
+
+    .nav-link:hover {
+        color: rgba(255,255,255,.9);
+    }
 
 /* Main container 
------------------------------------------------
-*/
-
+-----------------------------------------------------------------------------------------*/
 .container-fluid {
-    max-width: 1440px;
+    max-width: var(--max-width-xl);
 }
-
 
 #container-gallery {
     padding-left: 0.6rem;
@@ -67,11 +259,25 @@ a.navbar-brand {
     background-color: var(--dark);
 }
 
+#no-gallery, #empty-gallery {
+    text-align: center;
+}
+
+    #no-gallery span, #empty-gallery span {
+        color: var(--primary-light);
+    }
+
+    #empty-gallery button {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+    }
+
 
 /* Left menu showing list of galleries 
--------------------------------------------------
+----------------------------------------------------------------------------------------------------
 */
-
 
 #list-galleries {
     position: sticky;
@@ -83,13 +289,13 @@ a.navbar-brand {
 }
 
 .accordion .card {
-    color: var(--light);
+    color: rgba(var(--light), 1);
     background-color: var(--dark);
 }
 
 .accordion .card-header {
     background-color: rgba(255, 255, 255, 0.15);
-    color: var(--light);
+    color: rgba(var(--light), 1); 
 }
 
 #list-galleries-header {
@@ -111,21 +317,26 @@ a.navbar-brand {
 }
 
     .detail-galerie a {
-        color: rgba(var(--primary), 1);
-        font-weight: 600;
+        color:rgba(var(--light), 1);
+        font-weight: 400;
     }
 
         .detail-galerie a:hover {
-            color: rgba(var(--primary), 1);
+            color: var(--primary-light);
             font-weight: 600;
-            text-decoration: underline;
+            text-decoration: none;
         }
+
+.badge-nb {
+    color: var(--light-grey);
+    background-color: rgb(var(--primary), 1);
+    top: 0px !important;
+}
 
 /*
 Gallery display in Main container
 ----------------------------------------------
 */
-
 #gallery-header {
     padding-left: 0.6rem;
     padding-right: 0.6rem;
@@ -136,7 +347,19 @@ Gallery display in Main container
 }
 
     #gallery-header .gallery-name {
-        font-size: large
+        font-size: large;
+        margin-right: 2rem;
+        margin-bottom: 1rem;
+    }
+
+#sorting {
+    display: flex;
+    align-items: center;
+}
+
+    #sorting * {
+        margin-right: 0rem;
+        margin-left: 0.3rem;
     }
 
 #container-gallery .card:hover .card-img {
@@ -178,10 +401,6 @@ Gallery display in Main container
     color: var(--light-grey);
 }
 
-#buttonsPage {
-    display: flex;
-    justify-content: center;
-}
 
 #containerBtdAdd {
     display: flex;
@@ -190,11 +409,50 @@ Gallery display in Main container
 }
 
 #container-gallery hr {
-    border-top: 2px solid rgba(0,0,0,.5);
+    border-top: 2px solid var(--gray-dark);
 }
+
+#buttons-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+    #buttons-page .page-nb {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+
+select {
+    background-color: rgba(255, 255, 255, .1);
+    border: none;
+    outline: none;
+    color: rgba(var(--light), 1);
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+option {
+    background-color: #252a2e;
+}
+
 /* Carousel Modal
 ---------------------------------------------------------
 */
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
 #carousel-pictures {
     display: none;
     position: fixed;
@@ -228,8 +486,17 @@ Gallery display in Main container
         width: 100%;
         padding-top: 1rem;
         padding-bottom: 1.5rem;
-        background-color: rgba(0,0,0,0.8);
+        background-color: rgba(0,0,0,0.9);
         transition: .5s ease;
+    }
+
+    #carousel-pictures .card {
+        border-radius: 0;
+        border: 2px solid var(--light-grey);
+    }
+
+    #carousel-pictures .card-img {
+        border-radius: 0;
     }
 
     #carousel-pictures #image-name {
@@ -309,128 +576,100 @@ Gallery display in Main container
             background-color: rgba(0, 0, 0, 0.8);
         }
 
-/*
-Global elements
----------------------------------------------------
-*/
 
+/* Add/Edit forms */
+/*-----------------------------------------------------------------------------*/
 
-.btn-add {
-    width: 5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center
+.modal-content {
+    background-color: var(--dark);
 }
 
-.btn-big {
-    border-radius: 3.75rem;
-    padding-left: 0.6rem;
-    padding-right: 0.8rem;
-    font-weight: 600;
-    font-variant: small-caps;
-    transition: 25ms ease;
-    line-height: 1.5;
+.modal-header, .modal-footer {
+    border: 0px;
 }
 
-    .btn-big:hover {
-        transform: scale(1.05);
+.modal-header {
+    flex-direction: column-reverse;
+}
+
+    .modal-header .close {
+        text-shadow: none;
+        color: rgba(var(--light), 0.8);
+        font-size: 2rem;
+        font-weight: 200;
     }
 
-.btn-primary {
-    color: black;
-    background-color: rgba(var(--primary), 1);
-    border-color: rgba(var(--primary), 1);
-    mix-blend-mode: screen;
-}
+        .modal-header .close:hover, .modal-header .close:active {
+            text-shadow: none;
+            color: var(--primary-light);
+        }
+        .modal-header .close:focus {
+            outline: none!important;
+        }
 
-    .btn-primary:hover {
-        color: black;
-        background-color: #00959c;
-        border-color: #00959c;
-        mix-blend-mode: screen;
+    .modal-header p {
+        font-size: 1.4rem;
+        margin-left: auto;
+        margin-right: auto;
     }
 
-.btn-secondary {
-    color: #6c757d;
-    border-color: #6c757d;
-    background-color: transparent;
-    border-width: 3px;
+#add-gallery-modal, #add-image-modal, #edit-image-modal {
+    margin-bottom: 0;
 }
 
-.btn-icon {
-    height: 2.2rem;
-    width: 2.2rem;
-    padding: 0rem;
+.modal-body input, .modal-body textarea, .modal-body #upload-file-txt {
+    background-color: rgba(255, 255, 255, .07);
+    font-size: 0.9rem;
+    color: rgba(var(--light), 0.6);
+    border: 0px;
 }
 
-.btn-icon-sm {
-    height: 1.8rem;
-    width: 1.8rem;
-    padding: 0rem;
-}
-
-.btn-edit {
-    background-color: rgba(var(--primary), 1);    
-}
-    .btn-edit:hover {
-        background-color: rgba(var(--primary), 0.7);
-        color: black;
-        mix-blend-mode: screen;
-    }
-
-.btn-delete {
-    background-color: rgba(var(--delete), 1);
-}
-    .btn-delete:hover {
-        background-color: rgba(var(--delete), 0.7);
-        color: black;
-        mix-blend-mode: screen;
-    }
-
-.btn-link {
-    font-weight: 400;
-    font-size: 1.1rem;
-    color: var(--light);
-    text-decoration: none;
-    border-radius: 0px;
-}
-
-    .btn-link:hover {
-        color: rgba(var(--primary),1);
-        text-decoration: none;
-    }
-
-    .btn-link:focus, .btn-link.focus {
-        text-decoration: none;
+    .modal-body input:focus, .modal-body textarea:focus {
+        background-color: rgba(255, 255, 255, .1);
+        font-size: 0.9rem;
+        color: rgba(var(--light), 0.6);
+        border: solid 1px rgba(var(--light), 0.6);
         box-shadow: none;
     }
 
-.icon-plus {
-    width: 1.2rem;
+.modal-body textarea {
+    min-height: 10rem;
 }
 
-    .icon-plus > path {
-        fill: black;
-        stroke: black;
-        stroke-width: 0.01rem;
-        stroke-linejoin: round;
+.modal-body label {
+    font-size: 1.1rem;
+}
+
+.modal-body .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.modal-body .form-upload {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body .upload-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+    .modal-body .upload-group label {
+        margin-right: 0.8rem;
+        margin-bottom: 0;
+        cursor: pointer;
     }
 
-.fas {
-    color: black;
-    font-size: 1.1rem;
-    mix-blend-mode: screen;
-}
-.fas-sm {
-    font-size: 0.9rem;
-    color: black;
-    mix-blend-mode: initial;
+.modal-body #upload-file-txt {
+    border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    width: 100%;
 }
 
-.fa-edit {
-    font-weight: 500;
-}
+
+
 /* container of Edit/Delete buttons  
 ----------------------------------------------------
 */
@@ -449,138 +688,6 @@ Global elements
 }
 
 
-.formGallery * {
-    font-size: 0.8rem;
-}
-
-/* Style of the modal showing pictures */
-/* ----------------------------------------------------*/
-/*.modal {
-    background-color: rgb(0,0,0);*/ /* Fallback color */
-/*background-color: rgba(0,0,0,0.9);*/ /* Black w/ opacity */
-/*}*/
-/*#showImage.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: 100px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: black;
-}
-
-#showImage .modal-content {
-    animation-name: zoom;
-    animation-duration: 0.4s;
-}
-
-#showImage .modal-dialog {
-    position: relative;
-    display: table;
-    overflow-y: auto;
-    overflow-x: auto;
-    width: auto;
-    max-height: 50%;
-    max-width: 60%;
-    min-height: 50%;
-    min-width: 60%;
-}
-
-#nomImage {
-    text-align: center;
-    font-size: 1.4rem;
-}*/
-
-/* Add Animation - Zoom in the Modal */
-
-/*#showImage .modal-footer {
-    display: grid;
-    justify-content: center;
-    border-bottom-right-radius: 0.3rem;
-    border-bottom-left-radius: 0.3rem;
-}
-
-#showImage .card-img-overlay {
-    position: absolute;
-    bottom: 0;
-    display: flex;
-    flex-direction: column-reverse;
-    opacity: 0;
-    width: 100%;
-    padding-top: 5%;
-    padding-bottom: 2%;
-    background-color: rgba(0,0,0,0.8);
-    transition: .5s ease;
-}
-
-    #showImage .card-img-overlay p {
-        margin-left: 5%;
-        margin-right: 5%;
-        color: antiquewhite;
-    }
-
-    #showImage .card-img:hover + .card-img-overlay, #showImage .card-img-overlay:hover {
-        opacity: 1;
-        cursor: pointer;
-    }
-
-.carousel-control-prev,
-.carousel-control-next {
-    position: absolute;
-    width: 8%;
-    color: #fff;
-    opacity: 0.5;
-    transition: opacity 0.15s ease;
-}
-
-#showImage #buttonNavigation {
-    display: flex;
-    justify-content: center;
-}*/
-/* ----------------------------------------------------*/
-
-@keyframes zoom {
-    from {
-        transform: scale(0)
-    }
-
-    to {
-        transform: scale(1)
-    }
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-h1, .h1 {
-    font-size: 2rem;
-}
-
-h2, .h2 {
-    font-size: 1.8rem;
-}
-
-h3, .h3 {
-    font-size: 1.6rem;
-}
-
-h4, .h4 {
-    font-size: 1.4rem;
-}
-
-h5, .h5 {
-    font-size: 1.2rem;
-}
-
-h6, .h6 {
-    font-size: 1rem;
-}
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -625,7 +732,7 @@ body {
     font-family: var(--font-quicksand);
     font-weight: 200;
     background-color: var( --dark-background);
-    color: var(--light);
+    color: rgba(var(--light),1);
 }
 
 .footer {
