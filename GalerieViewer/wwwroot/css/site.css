@@ -1,0 +1,751 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+/* import what we need to override */
+
+:root {
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --primary: 0, 151, 167;
+    --primary-light: #00c2cb;
+    --secondary: #6c757d;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: 248, 249, 250;
+    --light-grey: #d2d4d6;
+    --dark: #212529;
+    --dark-background: #131517;
+    --delete: 212, 61, 34;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --max-width-xl: 1440px;
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --font-neo-sans: neo-sans,sans-serif;
+    --font-quicksand: Quicksand, sans-serif;
+}
+
+/*Global elements
+---------------------------------------------------------------------------------
+*/
+
+h1, .h1 {
+    font-size: 2rem;
+}
+
+h2, .h2 {
+    font-size: 1.8rem;
+    color: var(--primary-light);
+}
+
+h3, .h3 {
+    font-size: 1.6rem;
+}
+
+h4, .h4 {
+    font-size: 1.4rem;
+}
+
+h5, .h5 {
+    font-size: 1.2rem;
+}
+
+h6, .h6 {
+    font-size: 1rem;
+}
+
+.btn {
+    box-shadow: none !important;
+    
+}
+
+.btn-add {
+    width: 5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center
+}
+
+.btn-big {
+    border-radius: 3.75rem;
+    padding-left: 0.8rem;
+    padding-right: 0.8rem;
+    font-weight: 600;
+    font-variant: small-caps;
+    transition: 25ms ease;
+    line-height: 1.5;
+    
+}
+
+.btn-primary  {
+    color: rgba(var(--light), 1);
+    background-color: rgba(var(--primary), 1);
+    border-color: rgba(var(--primary), 1);
+}
+
+    .btn-primary:hover, .btn-primary:active {
+        color: rgba(var(--light), 1);
+        background-color: rgba(var(--primary), 0.8) !important;
+        border-color: rgba(var(--primary),0.8) !important;
+        transform: scale(1.05);
+    }
+
+.btn-secondary, btn-secondary:focus, btn-secondary:active:focus, btn-secondary:active {
+    color: rgba(var(--light), 1);
+    border: none;
+    background-color: rgba(255, 255, 255, 0.1);
+    font-weight: 400;
+}
+
+    .btn-secondary:hover, .btn-secondary:active {
+        color: rgba(var(--light), 0.8);
+        border: none;
+        background-color: rgba(255, 255, 255, 0.05) !important;
+        transform: scale(1.05);
+    }
+
+
+.btn-icon {
+    height: 2rem;
+    width: 2rem;
+    padding: 0rem;
+}
+
+.btn-icon-sm {
+    height: 1.8rem;
+    width: 1.8rem;
+    padding: 0rem;
+}
+
+.btn-edit {
+    background-color: rgba(var(--primary), 1);
+}
+
+    .btn-edit:hover {
+        background-color: rgba(var(--primary), 0.7);
+        color: black;
+        mix-blend-mode: screen;
+    }
+
+.btn-delete {
+    background-color: rgba(var(--delete), 1);
+}
+
+    .btn-delete:hover {
+        background-color: rgba(var(--delete), 0.7);
+        color: black;
+        mix-blend-mode: screen;
+    }
+
+.btn-link {
+    font-weight: 400;
+    font-size: 1rem;
+    color: rgba(var(--light),1);
+    text-decoration: none;
+    border-radius: 0px;
+}
+
+    .btn-link:hover {
+        color: var(--primary-light);
+        text-decoration: none;
+    }
+
+    .btn-link:focus, .btn-link.focus {
+        text-decoration: none;
+        box-shadow: none;
+    }
+
+.icon-plus {
+    width: 1.2rem;
+}
+
+    .icon-plus > path {
+        fill: rgba(var(--light), 1);
+        stroke: rgba(var(--light), 1);
+        stroke-width: 0.01rem;
+        stroke-linejoin: round;
+    }
+
+.far {
+    font-size: 1.4rem;
+    vertical-align: middle;
+}
+
+.fas {
+    color: black;
+    font-size: 1rem;
+    mix-blend-mode: screen;
+}
+
+.fas-sm {
+    font-size: 0.9rem;
+    color: black;
+    mix-blend-mode: initial;
+}
+
+.fa-edit {
+    font-weight: 500;
+}
+
+hr {
+    border-top: 2px solid rgba(0,0,0,.5);
+}
+
+.text-danger {
+    font-weight: 400;
+}
+
+/*Navbar*/
+/*----------------------------------------------------------------------------------*/
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+    font-size: 1.2rem;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: rgba(var(--light), 0.8);
+}
+
+    .navbar-dark .navbar-nav .nav-link:hover, navbar-brand:hover {
+        color: var(--primary-light);
+    }
+
+.navbar {
+    font-size: 1rem;
+}
+
+    .navbar .container {
+        max-width: 1350px;
+    }
+
+.navbar-collapse {
+    font-weight: 400;
+}
+
+.nav-link {
+    color: rgba(255,255,255,.7);
+}
+
+    .nav-link:hover {
+        color: rgba(255,255,255,.9);
+    }
+
+/* Main container 
+-----------------------------------------------------------------------------------------*/
+.container-fluid {
+    max-width: var(--max-width-xl);
+}
+
+#container-gallery {
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+    padding-top: 1.6rem;
+    padding-bottom: 0.6rem;
+}
+
+#list-galleries, #container-gallery {
+    background-color: var(--dark);
+}
+
+#no-gallery, #empty-gallery {
+    text-align: center;
+}
+
+    #no-gallery span, #empty-gallery span {
+        color: var(--primary-light);
+    }
+
+    #empty-gallery button {
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2rem;
+        margin-bottom: 3rem;
+    }
+
+
+/* Left menu showing list of galleries 
+----------------------------------------------------------------------------------------------------
+*/
+
+#list-galleries {
+    position: sticky;
+    padding-right: 1.2rem;
+    padding-left: 1.2rem;
+    padding-bottom: 1.2rem;
+    top: 5rem;
+    z-index: 1000;
+}
+
+.accordion .card {
+    color: rgba(var(--light), 1);
+    background-color: var(--dark);
+}
+
+.accordion .card-header {
+    background-color: rgba(255, 255, 255, 0.15);
+    color: rgba(var(--light), 1); 
+}
+
+#list-galleries-header {
+    display: flex;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.detail-galerie {
+    border-left: solid;
+    border-left-width: medium;
+    border-left-color: rgba(var(--primary), 1);
+    background-color: rgba(255, 255, 255, 0.06);
+    padding: 1rem;
+}
+
+    .detail-galerie a {
+        color:rgba(var(--light), 1);
+        font-weight: 400;
+    }
+
+        .detail-galerie a:hover {
+            color: var(--primary-light);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+.badge-nb {
+    color: var(--light-grey);
+    background-color: rgb(var(--primary), 1);
+    top: 0px !important;
+}
+
+/*
+Gallery display in Main container
+----------------------------------------------
+*/
+#gallery-header {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+    margin-top: 1rem;
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+}
+
+    #gallery-header .gallery-name {
+        font-size: large;
+        margin-right: 2rem;
+        margin-bottom: 1rem;
+    }
+
+#sorting {
+    display: flex;
+    align-items: center;
+}
+
+    #sorting * {
+        margin-right: 0rem;
+        margin-left: 0.3rem;
+    }
+
+#container-gallery .card:hover .card-img {
+    opacity: 1;
+}
+
+#container-gallery .card {
+    transition: transform .3s; /* Animation */
+    cursor: pointer;
+}
+
+    #container-gallery .card:hover {
+        transform: scale(1.05);
+    }
+
+#container-gallery .card-img {
+    object-fit: cover;
+    opacity: 0.8;
+}
+
+#container-gallery .card-overlay {
+    background-color: rgb(0, 0, 0,.8);
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    position: absolute;
+    height: fit-content;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.container-imageCard {
+    display: flex;
+}
+
+.text-date {
+    line-height: 120%;
+    color: var(--light-grey);
+}
+
+
+#containerBtdAdd {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#container-gallery hr {
+    border-top: 2px solid var(--gray-dark);
+}
+
+#buttons-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+    #buttons-page .page-nb {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+    }
+
+select {
+    background-color: rgba(255, 255, 255, .1);
+    border: none;
+    outline: none;
+    color: rgba(var(--light), 1);
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+}
+
+option {
+    background-color: #252a2e;
+}
+
+/* Carousel Modal
+---------------------------------------------------------
+*/
+
+@keyframes zoom {
+    from {
+        transform: scale(0)
+    }
+
+    to {
+        transform: scale(1)
+    }
+}
+
+#carousel-pictures {
+    display: none;
+    position: fixed;
+    z-index: 19999;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.9);
+}
+
+    #carousel-pictures .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        width: fit-content;
+        max-width: 1200px;
+        animation-name: zoom;
+        animation-duration: 0.4s;
+    }
+
+    #carousel-pictures .card-overlay {
+        position: absolute;
+        bottom: 0;
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        width: 100%;
+        padding-top: 1rem;
+        padding-bottom: 1.5rem;
+        background-color: rgba(0,0,0,0.9);
+        transition: .5s ease;
+    }
+
+    #carousel-pictures .card {
+        border-radius: 0;
+        border: 2px solid var(--light-grey);
+    }
+
+    #carousel-pictures .card-img {
+        border-radius: 0;
+    }
+
+    #carousel-pictures #image-name {
+        text-transform: uppercase;
+        font-size: 1.2rem;
+    }
+
+    #carousel-pictures #image-date-creation, #image-date-upload, #image-nbs {
+        font-size: 0.8rem;
+    }
+
+    #carousel-pictures .card-overlay div {
+        margin-left: 2.5rem;
+        margin-right: 2.5rem;
+        padding-top: 0.5rem;
+        bottom: 0.5rem;
+        color: antiquewhite;
+    }
+
+        #carousel-pictures .card-overlay div span {
+            color: rgba(var(--primary), 1);
+        }
+
+    #carousel-pictures .card-img:hover + .card-overlay, #carousel-pictures .card-overlay:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    #carousel-pictures .close {
+        color: white;
+        position: absolute;
+        top: 10px;
+        right: 25px;
+        font-size: 35px;
+        font-weight: bold;
+        text-shadow: 0 0px 0 #fff;
+        opacity: .7;
+    }
+
+        #carousel-pictures .close:hover,
+        .close:focus {
+            color: #999;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    #carousel-pictures .carousel-slides {
+        display: none;
+    }
+
+    #carousel-pictures .prev,
+    #carousel-pictures .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -50px;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    #carousel-pictures .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+        /* On hover, add a black background color with a little bit see-through */
+        #carousel-pictures .prev:hover,
+        #carousel-pictures .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+
+/* Add/Edit forms */
+/*-----------------------------------------------------------------------------*/
+
+.modal-content {
+    background-color: var(--dark);
+}
+
+.modal-header, .modal-footer {
+    border: 0px;
+}
+
+.modal-header {
+    flex-direction: column-reverse;
+}
+
+    .modal-header .close {
+        text-shadow: none;
+        color: rgba(var(--light), 0.8);
+        font-size: 2rem;
+        font-weight: 200;
+    }
+
+        .modal-header .close:hover, .modal-header .close:active {
+            text-shadow: none;
+            color: var(--primary-light);
+        }
+        .modal-header .close:focus {
+            outline: none!important;
+        }
+
+    .modal-header p {
+        font-size: 1.4rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+#add-gallery-modal, #add-image-modal, #edit-image-modal {
+    margin-bottom: 0;
+}
+
+.modal-body input, .modal-body textarea, .modal-body #upload-file-txt {
+    background-color: rgba(255, 255, 255, .07);
+    font-size: 0.9rem;
+    color: rgba(var(--light), 0.6);
+    border: 0px;
+}
+
+    .modal-body input:focus, .modal-body textarea:focus {
+        background-color: rgba(255, 255, 255, .1);
+        font-size: 0.9rem;
+        color: rgba(var(--light), 0.6);
+        border: solid 1px rgba(var(--light), 0.6);
+        box-shadow: none;
+    }
+
+.modal-body textarea {
+    min-height: 10rem;
+}
+
+.modal-body label {
+    font-size: 1.1rem;
+}
+
+.modal-body .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.modal-body .form-upload {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body .upload-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+    .modal-body .upload-group label {
+        margin-right: 0.8rem;
+        margin-bottom: 0;
+        cursor: pointer;
+    }
+
+.modal-body #upload-file-txt {
+    border-radius: 0.25rem;
+    padding: 0.375rem 0.75rem;
+    width: 100%;
+}
+
+
+
+/* container of Edit/Delete buttons  
+----------------------------------------------------
+*/
+.buttons-edit {
+    display: flex;
+    justify-content: flex-end;
+}
+
+    .buttons-edit > * {
+        margin-right: 0.1rem;
+        margin-left: 0.1rem;
+    }
+
+.monImage:hover {
+    opacity: 0.2;
+}
+
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-family: var(--font-quicksand);
+    font-weight: 200;
+    background-color: var( --dark-background);
+    color: rgba(var(--light),1);
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}

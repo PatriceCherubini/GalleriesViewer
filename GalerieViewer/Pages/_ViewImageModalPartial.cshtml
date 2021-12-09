@@ -1,0 +1,26 @@
+﻿@model GalerieViewer.ViewModels.CarouselViewModel
+
+<div class="modal" id="carousel-pictures">
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+
+        @for (var i = 0; i < Model.NbPictures; i++)
+        {
+            <div id="carouselExample" class="carousel-slides" data-ride="carousel">
+                <div class="card">
+                    <img class="card-img w-100" src="~/Images/@Model.ListPictures[i].FileName" alt="@Model.ListPictures[i].Description">
+                    <div class="card-overlay">
+                        <div id="image-nbs">Pictures @(i+1) of @Model.NbPictures</div>
+                        <div id="image-name">@Model.ListPictures[i].Name</div>
+                        <div id="image-description">@Model.ListPictures[i].Description</div>
+                        <div id="image-date-creation"><span>Created: </span>@Model.ListPictures[i].DateCreation</div>
+                        <div id="image-date-upload"><span>Last Updated: </span>@Model.ListPictures[i].DateUpload</div>
+                    </div>
+                </div>
+            </div>
+        }
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+</div>
+

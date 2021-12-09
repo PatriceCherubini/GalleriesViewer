@@ -1,0 +1,52 @@
+﻿@model GalerieViewer.ViewModels.ImageViewModel
+
+<div class="modal fade" tabindex="-1" role="dialog" id="newImage">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <p id="add-image-modal">Add a new picture</p>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" data-url="@Url.Page("Index", Model.GalerieId)">
+                <form method="post" class="m-2" asp-page-handler="AddImage" enctype="multipart/form-data">
+                    <input name="IsValid" type="hidden" value="@ViewData.ModelState.IsValid.ToString()" />
+                    <input type="hidden" asp-for="ImageItemId" value="@Model.ImageItemId" />
+                    <input type="hidden" asp-for="GalerieId" value="@Model.GalerieId" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateCreation" class="control-label"></label>
+                        <input asp-for="DateCreation" asp-format="{0:yyyy-MM-ddTHH:mm}" class="form-control" />
+                        <span asp-validation-for="DateCreation" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-upload">
+                        <label asp-for="ImageFile" class="control-label"></label>
+                        <div class="upload-group">
+                            <input asp-for="ImageFile" id="actual-btn-upload" class="form-control" accept="image/*" hidden />
+                            <label for="actual-btn-upload" class="btn btn-primary" id="false-btn-upload">Upload</label>
+                            <span id="upload-file-txt">No File Chosen</span>
+                        </div>
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    </div>
+                </form>
+                <script src="~/js/Upload.js" asp-append-version="true"></script>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
