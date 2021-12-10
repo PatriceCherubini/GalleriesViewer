@@ -40,6 +40,31 @@ for details on configuring this project to bundle and minify static web assets. 
     --font-quicksand: Quicksand, sans-serif;
 }
 
+/* Main elements */
+/*-------------------------------------------------------------------------------*/
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+    font-family: var(--font-quicksand);
+    font-weight: 200;
+    background-color: var( --dark-background);
+    color: rgba(var(--light),1);
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; 
+}
+
 /*Global elements
 ---------------------------------------------------------------------------------
 */
@@ -70,16 +95,7 @@ h6, .h6 {
 }
 
 .btn {
-    box-shadow: none !important;
-    
-}
-
-.btn-add {
-    width: 5rem;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center
+    box-shadow: none !important; 
 }
 
 .btn-big {
@@ -90,10 +106,9 @@ h6, .h6 {
     font-variant: small-caps;
     transition: 25ms ease;
     line-height: 1.5;
-    
 }
 
-.btn-primary  {
+.btn-primary {
     color: rgba(var(--light), 1);
     background-color: rgba(var(--primary), 1);
     border-color: rgba(var(--primary), 1);
@@ -120,6 +135,13 @@ h6, .h6 {
         transform: scale(1.05);
     }
 
+.btn-add {
+    width: 5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center
+}
 
 .btn-icon {
     height: 2rem;
@@ -296,13 +318,11 @@ a.navbar-brand {
 }
 
 .accordion .card {
-    color: rgba(var(--light), 1);
     background-color: var(--dark);
 }
 
 .accordion .card-header {
     background-color: rgba(255, 255, 255, 0.15);
-    color: rgba(var(--light), 1); 
 }
 
 #list-galleries-header {
@@ -374,7 +394,7 @@ Gallery display in Main container
 }
 
 #container-gallery .card {
-    transition: transform .3s; /* Animation */
+    transition: transform .3s;
     cursor: pointer;
 }
 
@@ -461,7 +481,7 @@ option {
 }
 
 #carousel-pictures {
-    display: none;
+    display: none; /*changes dynamicaly with script to display one picture at a time*/
     position: fixed;
     z-index: 19999;
     padding-top: 100px;
@@ -582,7 +602,6 @@ option {
         #carousel-pictures .next:hover {
             background-color: rgba(0, 0, 0, 0.8);
         }
-
 
 /* Add/Edit forms */
 /*-----------------------------------------------------------------------------*/
@@ -726,26 +745,4 @@ button.accept-policy {
 }
 
 
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-    position: relative;
-    min-height: 100%;
-}
 
-body {
-    /* Margin bottom by footer height */
-    margin-bottom: 60px;
-    font-family: var(--font-quicksand);
-    font-weight: 200;
-    background-color: var( --dark-background);
-    color: rgba(var(--light),1);
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
-}
