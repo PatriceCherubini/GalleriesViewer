@@ -15,7 +15,7 @@ namespace GalerieViewer.Data
     /// </summary>
     public class DataAccessDB : IDataAccess
     {
-        private AppDbContext _context;
+        private readonly AppDbContext _context;
         public DataAccessDB(AppDbContext context)
         {
             _context = context;

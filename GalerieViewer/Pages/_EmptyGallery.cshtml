@@ -1,4 +1,6 @@
-﻿<div id="empty-gallery">
+﻿
+@* Partial view that is displayed when a gallery has no picture in it *@
+<div id="empty-gallery">
     <p><h5>This gallery is empty.</h5></p>
     <p><h6>To add a picture to this gallery , click the <span>ADD</span> button below.</h6></p>
     <button type="button" class="btn btn-big btn-primary btn-add" data-toggle="ajax-modal-image" data-url="@Url.Page("Index", "ImageModalPartial", new { idGallery = Model.Galerie.Id })">

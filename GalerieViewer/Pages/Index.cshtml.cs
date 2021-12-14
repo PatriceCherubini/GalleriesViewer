@@ -27,9 +27,8 @@ namespace GalerieViewer.Pages
     public class IndexModel : PageModel
     {
         private readonly IWebHostEnvironment _hostEnvironment;
-        private readonly ILogger<IndexModel> _logger;
-        private IGalerieService _galerieService;
-        private IConfiguration _configuration;
+        private readonly IGalerieService _galerieService;
+        private readonly IConfiguration _configuration;
         [BindProperty]
         public int PageSize { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -41,9 +40,8 @@ namespace GalerieViewer.Pages
         public GalerieFullViewModel Galerie { get; set; }
         [BindProperty]
         public SortType SortingList { get; set; }
-        public IndexModel(ILogger<IndexModel> logger, IGalerieService galerieService, IWebHostEnvironment hostEnvironment, IConfiguration configuration)
+        public IndexModel(IGalerieService galerieService, IWebHostEnvironment hostEnvironment, IConfiguration configuration)
         {
-            _logger = logger;
             _galerieService = galerieService;
             _hostEnvironment = hostEnvironment;
             _configuration = configuration;
@@ -102,18 +100,16 @@ namespace GalerieViewer.Pages
         {
             Galerie = await _galerieService.GetPaginatedGallery(model.OpenedGallery, PageSize, PageNB);
             Show = model.OpenedGallery;
-            int toOpenGallery = 0;
 
             if (ModelState.IsValid)
             {
                 if (model.Gallery.Id == 0)
                 {
-                    toOpenGallery = _galerieService.AddNewGallery(model.Gallery);
+                    _galerieService.AddNewGallery(model.Gallery);
                 }
                 else
                 {
                     _galerieService.UpdateGallery(model.Gallery);
-                    toOpenGallery = model.Gallery.Id;
                 }
             }
             return Partial("_GalleryModalPartial", model);

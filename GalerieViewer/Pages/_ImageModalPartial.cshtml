@@ -1,5 +1,6 @@
 ﻿@model GalerieViewer.ViewModels.ImageViewModel
 
+@* Modal that displays a form to add a new picture in a gallery *@
 <div class="modal fade" tabindex="-1" role="dialog" id="newImage">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -40,7 +41,8 @@
                         <span asp-validation-for="ImageFile" class="text-danger"></span>
                     </div>
                 </form>
-                <script src="~/js/Upload.js" asp-append-version="true"></script>
+                @* Script associated to the upload button *@
+                <script src="~/js/upload.js" asp-append-version="true"></script>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

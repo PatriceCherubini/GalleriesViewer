@@ -12,13 +12,20 @@ namespace GalerieViewer.Services
     /// </summary>
     public class GalerieService : IGalerieService
     {
-        private IDataAccess _dataAccess;
+        private readonly IDataAccess _dataAccess;
         private readonly IPictureUploader _pictureUploader;
         public GalerieService(IDataAccess dataAccess, IPictureUploader pictureUploader)
         {
             _dataAccess = dataAccess;
             _pictureUploader = pictureUploader;
         }
+        /// <summary>
+        /// Get a specific "page" of a gallery
+        /// </summary>
+        /// <param name="idGallery">Id of the gallery</param>
+        /// <param name="pageSize">Size of a page (number of pictures)</param>
+        /// <param name="pageNB">The page to display</param>
+        /// <returns></returns>
         public async Task<GalerieFullViewModel> GetPaginatedGallery(int idGallery, int pageSize, int pageNB)
         {
             try
@@ -35,6 +42,14 @@ namespace GalerieViewer.Services
                 return null;
             }
         }
+        /// <summary>
+        /// Get a specific "page" of a gallery with sorting as parameter. Update the gallery "sortedby" with sorting paramter.
+        /// </summary>
+        /// <param name="idGallery">Id of the gallery</param>
+        /// <param name="pageSize">Size of a page (number of pictures)</param>
+        /// <param name="pageNB">The page to display</param>
+        /// <param name="sortedBy">The sorting parameter</param>
+        /// <returns></returns>
         public async Task<GalerieFullViewModel> GetPaginatedGallery(int idGallery, int pageSize, int pageNB, SortType sortedBy)
         {
             try
@@ -51,6 +66,12 @@ namespace GalerieViewer.Services
                 return null;
             }
         }
+        /// <summary>
+        /// Sort a gallery
+        /// </summary>
+        /// <param name="Gallery">The Gallery (GalleryFullViewModel9 to sort</param>
+        /// <param name="sortedBy">Sorting parameter</param>
+        /// <returns></returns>
         public GalerieFullViewModel SortGallery(GalerieFullViewModel Gallery, SortType sortedBy)
         {
             try

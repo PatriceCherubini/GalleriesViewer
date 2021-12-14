@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
+/// <summary>
+/// Displays the list of galleries in the left menu
+/// </summary>
 namespace GalerieViewer.ViewComponents
 {
     public class ListGaleriesViewComponent : ViewComponent
     {
-        private IListGalerieService _listGalerieService;
+        private readonly IListGalerieService _listGalerieService;
 
         public ListGaleriesViewComponent(IListGalerieService listGalerieService)
         {

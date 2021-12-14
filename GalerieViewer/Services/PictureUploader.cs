@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using LazZiya.ImageResize;
 using System.Drawing;
 
@@ -78,7 +75,7 @@ namespace GalerieViewer.Services
             {
                 ImageFile.CopyTo(fileStream);
             }
-
+            // Create a thumbnail of the picture 
             using (var img = Image.FromFile(ImagePath))
             {
                 img.ScaleByWidth(thumbSize)

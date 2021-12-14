@@ -1,7 +1,5 @@
 ﻿using GalerieViewer.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace GalerieViewer.Services
@@ -13,6 +11,10 @@ namespace GalerieViewer.Services
         {
             _dataAccess = dataAccess;
         }
+        /// <summary>
+        /// Get all galleries
+        /// </summary>
+        /// <returns>A collection of all galleries (in GalerieViewModel format)</returns>
         public async Task<ICollection<GalerieViewModel>> GenerateListGaleries()
         {
             return await _dataAccess.GetAllGaleries();

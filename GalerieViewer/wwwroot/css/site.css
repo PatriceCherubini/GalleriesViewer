@@ -94,6 +94,15 @@ h6, .h6 {
     font-size: 1rem;
 }
 
+a {
+    color: rgba(var(--light), 1);
+}
+
+    a:hover {
+        color: var(--primary-light);
+        text-decoration: none;
+    }
+
 .btn {
     box-shadow: none !important; 
 }
@@ -342,16 +351,11 @@ a.navbar-brand {
     background-color: rgba(255, 255, 255, 0.06);
     padding: 1rem;
 }
-
-    .detail-galerie a {
-        color:rgba(var(--light), 1);
+    .detail-galerie a {  
         font-weight: 400;
     }
-
-        .detail-galerie a:hover {
-            color: var(--primary-light);
+        .detail-galerie a:hover {       
             font-weight: 600;
-            text-decoration: none;
         }
 
 .badge-nb {
@@ -591,13 +595,11 @@ option {
         -webkit-user-select: none;
     }
 
-    /* Position the "next button" to the right */
     #carousel-pictures .next {
         right: 0;
         border-radius: 3px 0 0 3px;
     }
 
-        /* On hover, add a black background color with a little bit see-through */
         #carousel-pictures .prev:hover,
         #carousel-pictures .next:hover {
             background-color: rgba(0, 0, 0, 0.8);
@@ -643,7 +645,14 @@ option {
     margin-bottom: 0;
 }
 
-.modal-body input, .modal-body textarea, .modal-body #upload-file-txt {
+.modal-body #upload-file-txt, .form-control {
+    background-color: rgba(255, 255, 255, .07);
+    font-size: 0.9rem;
+    color: rgba(var(--light), 0.6);
+    border: 0px;
+}
+
+ {
     background-color: rgba(255, 255, 255, .07);
     font-size: 0.9rem;
     color: rgba(var(--light), 0.6);
