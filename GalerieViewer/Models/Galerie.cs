@@ -9,7 +9,7 @@ namespace GalerieViewer.Models
     public class Galerie 
     {
         public int GalerieId { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public bool IsDeleted { get; set; } = false;
         [Required]
         [Column(TypeName = "nvarchar(25)")]

@@ -6,6 +6,6 @@ namespace GalerieViewer.Services
 {
     public interface IListGalerieService
    {
-       Task <ICollection<GalerieViewModel>> GenerateListGaleries();
+       Task <ICollection<GalerieViewModel>> GenerateListGaleries(string userID);
     }
 }

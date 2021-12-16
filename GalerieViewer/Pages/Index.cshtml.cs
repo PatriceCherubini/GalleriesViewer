@@ -1,8 +1,10 @@
 ﻿using GalerieViewer.Common;
+using GalerieViewer.Data;
 using GalerieViewer.Services;
 using GalerieViewer.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
@@ -17,13 +19,14 @@ using System.Threading.Tasks;
 
 namespace GalerieViewer.Pages
 {
-    //[Authorize]
+    [Authorize]
     [ValidateAntiForgeryToken]
     public class IndexModel : PageModel
     {
         private readonly IWebHostEnvironment _hostEnvironment;
         private readonly IGalerieService _galerieService;
         private readonly IConfiguration _configuration;
+        private readonly UserManager<ApplicationUser> _userManager;
         [BindProperty]
         public int PageSize { get; set; }
         [BindProperty(SupportsGet = true)]
@@ -36,11 +39,13 @@ namespace GalerieViewer.Pages
         [BindProperty]
         public SortType SortingList { get; set; }
 
-        public IndexModel(IGalerieService galerieService, IWebHostEnvironment hostEnvironment, IConfiguration configuration)
+        public IndexModel(IGalerieService galerieService, IWebHostEnvironment hostEnvironment, IConfiguration configuration, UserManager<ApplicationUser> userManager)
         {
             _galerieService = galerieService;
             _hostEnvironment = hostEnvironment;
             _configuration = configuration;
+            _userManager = userManager;
+
             PageSize = _configuration.GetValue("PageSize", 10);
         }
         /// <summary>
@@ -49,7 +54,16 @@ namespace GalerieViewer.Pages
         /// <returns>The Index.cshtml page</returns>
         public async Task<IActionResult> OnGet()
         {
-            Galerie = await _galerieService.GetPaginatedGallery(id, PageSize, PageNB);
+            if (id == 1)
+            {
+                string userId = (await _userManager.GetUserAsync(User)).Id;
+                Galerie = await _galerieService.GetDefautPaginatedGallery(userId, PageSize, PageNB);
+            }
+            else
+            {
+                Galerie = await _galerieService.GetPaginatedGallery(id, PageSize, PageNB);
+            }
+            
             Show = Galerie == null ? 0 : Galerie.Id;
             id = Galerie == null ? 0 : Galerie.Id;
             SortingList = Galerie == null ? SortType.DateUpload : Galerie.SortedBy;
@@ -81,9 +95,10 @@ namespace GalerieViewer.Pages
         /// </summary>
         /// <param name="openedGallery">The id of the gallery this is currently opened</param>
         /// <returns>A partial view which contain a form to add a new gallery</returns>
-        public PartialViewResult OnGetGalleryModalPartial(int openedGallery)
+        public async Task<PartialViewResult> OnGetGalleryModalPartial(int openedGallery)
         {
-            return Partial("_GalleryModalPartial", new EditGalleryViewModel { Gallery = new GalerieViewModel(), OpenedGallery = openedGallery });
+            ApplicationUser applicationUser = await _userManager.GetUserAsync(User);
+            return Partial("_GalleryModalPartial", new EditGalleryViewModel { Gallery = new GalerieViewModel() { UserId = (await _userManager.GetUserAsync(User)).Id }, OpenedGallery = openedGallery });
         }
         /// <summary>
         /// This method is called when the user clicks on a "edit gallery" button.

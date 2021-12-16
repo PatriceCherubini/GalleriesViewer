@@ -42,6 +42,22 @@ namespace GalerieViewer.Services
                 return null;
             }
         }
+        public async Task<GalerieFullViewModel> GetDefautPaginatedGallery(string userId, int pageSize, int pageNB)
+        {
+            try
+            {
+                var gallery = await _dataAccess.GetFirstGalerie(userId, pageSize);
+                gallery = SortGallery(gallery, gallery.SortedBy);
+                gallery.ListeImages = gallery.ListeImages
+                                     .Skip((pageNB - 1) * pageSize)
+                                     .Take(pageSize).ToList();
+                return gallery;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
         /// <summary>
         /// Get a specific "page" of a gallery with sorting as parameter. Update the gallery "sortedby" with sorting paramter.
         /// </summary>
@@ -181,6 +197,5 @@ namespace GalerieViewer.Services
             image.FileNameThumb = _pictureUploader.UniqueFileNameThumb;
             return image;
         }
-
     }
 }

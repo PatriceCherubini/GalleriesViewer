@@ -22,12 +22,13 @@ namespace GalerieViewer.Data
         }
 
         /// <summary>
-        /// Get a list of all galleriers
+        /// Get a list of all galleriers of user
         /// </summary>
         /// <returns>A List containing all galleries in GalerieViewModel format</returns>
-        public async Task<List<GalerieViewModel>> GetAllGaleries()
+        public async Task<List<GalerieViewModel>> GetAllGaleries(string userID)
         {
-            return await _context.Galeries.Where(x => x.IsDeleted == false)
+            return await _context.Galeries.Where(u => u.UserId == userID)
+                                    .Where(x => x.IsDeleted == false)
                                     .Include("ImageItems")
                                     .OrderBy(o => o.Nom)
                                     .Select(g => new GalerieViewModel()
@@ -43,7 +44,7 @@ namespace GalerieViewer.Data
                                    .ToListAsync();
         }
         /// <summary>
-        /// Look for a specific gallery. If not found, get the first gallery (smallest if). If still no gallery is found, throw an exception
+        /// Look for a specific gallery. If not found, throw an exception
         /// </summary>
         /// <param name="id">The id of the gallery</param>
         /// <returns>A gallery (GalerieFullViewModel) with all pictures (if any) in it</returns>
@@ -55,8 +56,6 @@ namespace GalerieViewer.Data
                                            .FirstOrDefaultAsync();
             if (galerie == null)
             {
-                galerie = await GetFirstGalerie();
-                if (galerie == null)
                 {
                     throw new Exception("No gallery found");
                 }
@@ -79,15 +78,15 @@ namespace GalerieViewer.Data
 
         }
         /// <summary>
-        /// Method that return the gallery with the smallest id in the context
+        /// Method that return the first gallery (order by name) from a specific user
         /// </summary>
-        /// <returns>The gallery (GalerieFullViewModel) with the smallest id</returns>
-        private async Task<Galerie> GetFirstGalerie()
+        /// <returns>The gallery (GalerieFullViewModel)</returns>
+        public async Task<GalerieFullViewModel> GetFirstGalerie(string userId, int pageSize)
         {
-            return await _context.Galeries.Where(x => x.IsDeleted == false)
-                                    .OrderBy(g => g.GalerieId)
-                                    .Include("ImageItems")
-                                    .FirstOrDefaultAsync();
+            int idFirst = await _context.Galeries.Where(x => x.IsDeleted == false).Where(x => x.UserId == userId).OrderBy(g => g.Nom)
+                                    .Select(i => i.GalerieId).FirstOrDefaultAsync();
+
+            return await GetGalerie(idFirst, pageSize);
         }
         public async Task<CarouselViewModel> GetCarousel(int idGallery, int idImage)
         {
@@ -153,6 +152,7 @@ namespace GalerieViewer.Data
             var newGalerie = new Galerie()
             {
                 Nom = galerie.Name,
+                UserId = galerie.UserId,
                 DateCreation = DateTime.Now,
                 DateUpdate = DateTime.Now,
                 Description = galerie.Description,

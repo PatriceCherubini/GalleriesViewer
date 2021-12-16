@@ -15,9 +15,9 @@ namespace GalerieViewer.Services
         /// Get all galleries
         /// </summary>
         /// <returns>A collection of all galleries (in GalerieViewModel format)</returns>
-        public async Task<ICollection<GalerieViewModel>> GenerateListGaleries()
+        public async Task<ICollection<GalerieViewModel>> GenerateListGaleries(string userID)
         {
-            return await _dataAccess.GetAllGaleries();
+            return await _dataAccess.GetAllGaleries(userID);
         }
     }
 }

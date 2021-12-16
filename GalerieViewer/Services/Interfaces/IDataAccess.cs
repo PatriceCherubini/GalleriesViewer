@@ -8,8 +8,9 @@ namespace GalerieViewer.Services
 {
     public interface IDataAccess
     {
-        Task<List<GalerieViewModel>> GetAllGaleries();
+        Task<List<GalerieViewModel>> GetAllGaleries(string userID);
         Task<GalerieFullViewModel> GetGalerie(int id, int pageSize);
+        Task<GalerieFullViewModel> GetFirstGalerie(string userId, int pageSize);
         Task<CarouselViewModel> GetCarousel(int idGallery, int idImage);
         Task<List<ImageViewModel>> GetAllImagesItem(int id);
         Task<ImageViewModel> GetImage(int id);

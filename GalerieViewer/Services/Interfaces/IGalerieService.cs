@@ -10,6 +10,7 @@ namespace GalerieViewer.Services
     {
         Task<GalerieFullViewModel> GetPaginatedGallery(int idGallery, int pageSize, int pageNB);
         Task<GalerieFullViewModel> GetPaginatedGallery(int idGallery, int pageSize, int PageNB, SortType SortedBy);
+        Task<GalerieFullViewModel> GetDefautPaginatedGallery(string userId, int pageSize, int PageNB);
         GalerieFullViewModel SortGallery(GalerieFullViewModel Gallery, SortType SortedBy);
         Task<CarouselViewModel> ViewCarousel(int idImage, int idGallery);
         Task<ImageViewModel> GetImage(int id);

@@ -8,6 +8,7 @@ namespace GalerieViewer.ViewModels
     {
         public int Id { get; set; }
         public int? nbImageItems { get; set; }
+        public string UserId { get; set; }
         [Display(Name = "Enter a name for your gallery. Maximum 20 caracters")]
         [MaxLengthAttribute(20, ErrorMessage = "Your name is too long. Maximum 20 caracters")]
         [Required(ErrorMessage = "A name is required.")]
