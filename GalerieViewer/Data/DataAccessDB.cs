@@ -29,6 +29,7 @@ namespace GalerieViewer.Data
         {
             return await _context.Galeries.Where(x => x.IsDeleted == false)
                                     .Include("ImageItems")
+                                    .OrderBy(o => o.Nom)
                                     .Select(g => new GalerieViewModel()
                                     {
                                         Id = g.GalerieId,

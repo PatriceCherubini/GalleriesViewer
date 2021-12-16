@@ -1,9 +1,6 @@
 ﻿using GalerieViewer.Common;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GalerieViewer.ViewModels
 {
@@ -11,7 +8,7 @@ namespace GalerieViewer.ViewModels
     {
         public int GalerieId { get; set; }
         public int ImageItemId { get; set; }
-        [Display(Name = "Enter a name for your picture")]
+        [Display(Name = "Enter a name for your picture. maximum 20 caracters")]
         [MaxLengthAttribute(20, ErrorMessage = "Your name is too long. Maximum 20 caracters")]
         [Required(ErrorMessage = "A name is required.")]
         public string Name { get; set; }

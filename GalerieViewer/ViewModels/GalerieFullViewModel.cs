@@ -1,10 +1,5 @@
-﻿using GalerieViewer.Models;
-using Microsoft.AspNetCore.Http;
-using System;
+﻿using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Linq.Dynamic.Core;
 using System.ComponentModel.DataAnnotations;
 using GalerieViewer.Common;
 
