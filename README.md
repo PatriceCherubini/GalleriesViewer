@@ -12,14 +12,14 @@ SQL Server
 
 ## Features
 
-User login
+User login  
 Create a gallery  
-Add datas (description, date)  
-Edit / delete galleries
+Add data (name, description)  
+Edit / delete galleries  
 Display a list of galleries  
 Upload pictures in a gallery  
-Add datas to pictures  
+Add data to pictures (description, date) 
 Edit / delete pictures  
-Display pictures of a gallery (thumbnails)
+Display pictures of a gallery (thumbnails)  
 Sort pictures by name / date  
 Display a picture in fullscreen (carousel)
