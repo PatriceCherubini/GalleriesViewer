@@ -6,8 +6,8 @@ A small project of a picture gallery manager.
 ASP.Net Core 6.0 (Razor pages)  
 Entity Framework Core 6.0  
 HTML 5.0 / CSS 3.0  
-Javascript & JQuery 
-Bootstrap 4.6
+Javascript & JQuery  
+Bootstrap 4.6  
 SQL Server
 
 ## Features
@@ -18,7 +18,7 @@ Add data (name, description)
 Edit / delete galleries  
 Display a list of galleries  
 Upload pictures in a gallery  
-Add data to pictures (description, date) 
+Add data to pictures (description, date)  
 Edit / delete pictures  
 Display pictures of a gallery (thumbnails)  
 Sort pictures by name / date  
