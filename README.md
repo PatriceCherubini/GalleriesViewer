@@ -1,4 +1,4 @@
-# GalleriesViewer
+# Galleries Viewer
 A small project of a picture gallery manager. 
 
 ## Technologies
