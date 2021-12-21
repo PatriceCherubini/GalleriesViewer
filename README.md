@@ -52,7 +52,7 @@ SQL Server
 
  ![Display picture](/assets/screenshots/screen4.jpg)  
 <p align="center">
-  <i>a picture is displayed in a carousel when the user click on the thumbnail</i>
+  <i>A picture is displayed in a carousel when the user clicks on the thumbnail</i>
 </p> 
 </br>
 
