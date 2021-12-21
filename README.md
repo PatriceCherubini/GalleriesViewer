@@ -30,26 +30,31 @@ SQL Server
 <p align="center">
   <i>Opened gallery with the list of galleries on the left and thumbnails of the pictures on the right</i>
 </p>     
+ </br>
  
 ![Second page of the gallery](/assets/screenshots/screen3.JPG)  
 <p align="center">
   <i>Second page of the gallery</i>
-</p>  
+</p>
+</br>
     
  ![Add a new picture](/assets/screenshots/screen2.JPG)  
 <p align="center">
   <i>Form to add a new picture to the gallery</i>
 </p>
+</br>
  
  ![Edit picture](/assets/screenshots/screen5.jpg)  
 <p align="center">
   <i>Form to edit the data from a picture</i>
 </p>
+</br>
 
  ![Display picture](/assets/screenshots/screen4.jpg)  
 <p align="center">
   <i>a picture is displayed in a carousel when the user click on the thumbnail</i>
-</p>  
+</p> 
+</br>
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/PatriceCherubini/GalleriesViewer/master/assets/screenshots/screen6.JPG" alt="Phone display"> 
